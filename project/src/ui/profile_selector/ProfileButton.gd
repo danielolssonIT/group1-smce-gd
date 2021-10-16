@@ -19,14 +19,16 @@ extends MarginContainer
 
 signal pressed
 
-onready var btn = $Button6
+onready var btn = $Button
 
 onready var name_label = $MarginContainer/VBoxContainer/Label
 onready var extra_label = $MarginContainer/VBoxContainer/Label2
 
+# send signal "pressed" when button is pressed
 func _ready():
 	btn.connect("pressed", self, "emit_signal", ["pressed"])
 
+# displays a single profile button
 func display_profile(profile: ProfileConfig):
 	name_label.text = "\n" + profile.profile_name
 	var env_exists: bool = Global.environments.has(profile.environment)

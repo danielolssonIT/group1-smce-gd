@@ -19,19 +19,22 @@ extends Control
 
 var profile_button_t = preload("res://src/ui/profile_selector/ProfileButton.tscn")
 
-signal profile_selected
+signal profile_selected 
 
 onready var attach = $VBoxContainer/CenterContainer/MarginContainer/HBoxContainer
-onready var fresh_btn = attach.get_node("Button")
+onready var fresh_btn = attach.get_node("Button") # "Start Fresh" button
 
+# send signal "pressed" when button is pressed
 func _ready() -> void:
 	fresh_btn.connect("pressed", self, "_on_profile_pressed", [ProfileConfig.new()])
 
-
+# displays saved profiles horizontally on the start page
 func display_profiles(arr: Array) -> void:
+	# removes all saved profile buttons 
 	for child in attach.get_children():
 		if child != fresh_btn:
 			child.queue_free()
+	# add profile button for each profile
 	for profile in arr:
 		var btn = profile_button_t.instance()
 		attach.add_child(btn)
@@ -39,7 +42,7 @@ func display_profiles(arr: Array) -> void:
 		btn.connect("pressed", self, "_on_profile_pressed", [profile])
 		
 
-
+# send signal to master.gd when profile is selected
 func _on_profile_pressed(profile) -> void:
 	emit_signal("profile_selected", profile)
 

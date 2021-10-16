@@ -31,7 +31,7 @@ onready var sketch_manager = $SketchManager
 var orig_profile: ProfileConfig = null
 var active_profile: ProfileConfig = null
 
-
+# sends signal "profile_selected" to method _on_profile_sel
 func _ready() -> void:
 	profile_select.connect("profile_selected", self, "_on_profile_selected")
 	
@@ -84,6 +84,7 @@ func show_profile_select() -> void:
 
 
 func _on_profile_selected(profile: ProfileConfig) -> void:
+	# checks if profile selected is valid
 	if ! is_instance_valid(profile):
 		printerr("Invalid profile selected")
 		return

@@ -52,4 +52,6 @@ __meta__ = {
 }
 
 [node name="ProfileSelect" parent="." instance=ExtResource( 1 )]
+margin_left = 1.14099
+margin_right = 1.14099
 rect_pivot_offset = Vector2( 640, 360 )

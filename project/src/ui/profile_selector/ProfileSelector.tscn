@@ -74,7 +74,8 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-anchor_right = 1.0
+anchor_left = 0.00267401
+anchor_right = 1.00267
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -85,7 +86,7 @@ __meta__ = {
 
 [node name="CenterContainer" type="ScrollContainer" parent="VBoxContainer"]
 margin_top = 227.0
-margin_right = 1280.0
+margin_right = 1279.0
 margin_bottom = 493.0
 rect_min_size = Vector2( 0, 250 )
 size_flags_horizontal = 3
@@ -94,7 +95,7 @@ follow_focus = true
 scroll_vertical_enabled = false
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/CenterContainer"]
-margin_right = 1280.0
+margin_right = 1279.0
 margin_bottom = 266.0
 size_flags_horizontal = 3
 custom_constants/margin_right = 32
@@ -104,7 +105,7 @@ custom_constants/margin_bottom = 16
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/CenterContainer/MarginContainer"]
 margin_left = 32.0
-margin_right = 1248.0
+margin_right = 1247.0
 margin_bottom = 250.0
 mouse_filter = 2
 size_flags_horizontal = 3
@@ -115,8 +116,8 @@ __meta__ = {
 }
 
 [node name="Button" type="Button" parent="VBoxContainer/CenterContainer/MarginContainer/HBoxContainer"]
-margin_left = 460.0
-margin_right = 756.0
+margin_left = 459.0
+margin_right = 755.0
 margin_bottom = 250.0
 rect_min_size = Vector2( 296, 250 )
 mouse_default_cursor_shape = 2
