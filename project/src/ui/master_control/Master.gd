@@ -73,7 +73,7 @@ func fade_cover(bruh: bool):
 # Should contain a "Start Fresh"-button, and a button for each saved profile.
 func show_profile_select() -> void:
 	yield(unload_profile(),"completed")
-	yield(get_tree(), "idle_frame")
+	yield(get_tree(), "idle_frame") # Wait for the next frame before continuing
 	orig_profile = null
 	active_profile = null
 	
@@ -102,7 +102,7 @@ func _on_profile_selected(profile: ProfileConfig) -> void:
 	tween.interpolate_property(profile_select, "rect_scale", Vector2(1,1), Vector2(10,10), 0.4, Tween.TRANS_CUBIC)
 	tween.start()
 	
-	# Wait for 0.35 seconds before 
+	# Wait for 0.35 seconds before loading the profile 
 	yield(get_tree().create_timer(0.35), "timeout")
 	load_profile(profile)
 	
@@ -119,6 +119,10 @@ func unload_profile() -> void:
 	yield(get_tree(), "idle_frame") # Resume execution the next frame
 	if ! is_instance_valid(active_profile):
 		return
+	
+	# Wait for the animation to finish before continuing in this function
+	# but let the calling function/object continue its work.
+	# The animation should play in parallel with other processes in the program.
 	yield(fade_cover(true), "completed")
 
 	if is_instance_valid(hud):
