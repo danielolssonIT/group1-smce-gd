@@ -54,6 +54,8 @@ func fade_cover(bruh: bool):
 	var tween: Tween = TempTween.new()
 	add_child(tween)
 	
+	bruh = false
+	
 	if bruh:
 		screen_cover.visible = bruh
 	
@@ -67,12 +69,15 @@ func fade_cover(bruh: bool):
 	
 	screen_cover.visible = bruh
 
-
+# Display the GUI for selecting profiles
+# Should contain a "Start Fresh"-button, and a button for each saved profile.
 func show_profile_select() -> void:
 	yield(unload_profile(),"completed")
 	yield(get_tree(), "idle_frame")
 	orig_profile = null
 	active_profile = null
+	
+	# Play "zooming out" animation before showing the profile select GUI
 	var tween: Tween = TempTween.new()
 	add_child(tween)
 	profile_select.display_profiles(profile_manager.saved_profiles.keys())
@@ -89,6 +94,7 @@ func _on_profile_selected(profile: ProfileConfig) -> void:
 		printerr("Invalid profile selected")
 		return
 	
+	# play "zooming in" animation before changing the view to the playground scene
 	var tween: Tween = TempTween.new()
 	add_child(tween)
 	profile_select.rect_pivot_offset = profile_select.rect_size / 2	
@@ -96,9 +102,11 @@ func _on_profile_selected(profile: ProfileConfig) -> void:
 	tween.interpolate_property(profile_select, "rect_scale", Vector2(1,1), Vector2(10,10), 0.4, Tween.TRANS_CUBIC)
 	tween.start()
 	
+	# Wait for 0.35 seconds before 
 	yield(get_tree().create_timer(0.35), "timeout")
 	load_profile(profile)
 	
+	# Wait for the animation to complete before hiding the profile select GUI
 	yield(tween, "tween_all_completed")
 	profile_select.visible = false
 
@@ -108,7 +116,7 @@ func reload_profile() -> void:
 
 
 func unload_profile() -> void:
-	yield(get_tree(), "idle_frame")
+	yield(get_tree(), "idle_frame") # Resume execution the next frame
 	if ! is_instance_valid(active_profile):
 		return
 	yield(fade_cover(true), "completed")
