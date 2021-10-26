@@ -18,6 +18,7 @@
 class_name ProfileManager
 extends Reference
 
+# A mapping from a profile to the path (in system directory) of the profile
 var saved_profiles: Dictionary = {}
 
 func load_profiles() -> Array:
@@ -25,26 +26,35 @@ func load_profiles() -> Array:
 	var profiles = []
 	saved_profiles = {}
 	
+	# For all profile files in the path,
+	# save the corresponding profile and the path to the file
+	# in the "profiles"-array and the "saved_profiles"-dictionary
 	for profile_file in Util.ls(profile_path):
+		# path/to/profile + profile_file = path/to/profile/profile_file
 		var path: String = profile_path.plus_file(profile_file)
 		
+		# Try to open the file, if not possible move on to next loop iteration
 		var file = File.new()
 		if file.open(path, File.READ) != OK:
 			printerr("failed to read: %s" % path)
 			continue
 		
+		# Read the json data for the profile
 		var json = file.get_as_text()
-		
 		var parse_res := JSON.parse(json)
 		
+		# Check if the JSON result is a dictionary
 		if ! parse_res.result is Dictionary:
 			printerr("%s: not a dictionairy" % path)
 		
+		# Create a new profile object
 		var profile = ProfileConfig.new()
 		Util.inflate_ref(profile, parse_res.result)
 		
+		# Save the profile object and path to the profile file
 		profiles.push_back(profile)
 		saved_profiles[profile] = path
+		
 		print("loaded profile: %s" % profile.profile_name)
 	
 	return profiles

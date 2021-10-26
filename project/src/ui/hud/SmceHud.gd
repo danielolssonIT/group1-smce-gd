@@ -42,7 +42,7 @@ var paths: Dictionary = {}
 var cam_ctl: CamCtl = null
 var profile = null
 var sketch_manager: SketchManager = null
-var master_manager = null
+var master_manager = null # A reference to Master.gd
 
 var disabled = false setget set_disabled
 

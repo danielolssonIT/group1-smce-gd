@@ -49,27 +49,29 @@ func _input(event: InputEvent):
 		if event.is_action_pressed("ui_cancel"):
 			show_profile_select()
 
-
-func fade_cover(bruh: bool):
+# Fade in/out the screen cover (the background in the profile selector view)
+func fade_cover(show_screen_cover: bool):
 	var tween: Tween = TempTween.new()
 	add_child(tween)
 	
-	bruh = false
+	# Wait for the fade out animation to complete before hiding the screen cover
+	if show_screen_cover:
+		screen_cover.visible = show_screen_cover
 	
-	if bruh:
-		screen_cover.visible = bruh
-	
-	if !bruh:
-		tween.interpolate_property(screen_cover, "modulate:a", 1, 0, 0.3, Tween.TRANS_CUBIC)
-	else:
-		tween.interpolate_property(screen_cover, "modulate:a", 0, 1, 0.3, Tween.TRANS_CUBIC)
+	# Play fade in/out
+	if show_screen_cover: # Make screen cover appear
+		tween.interpolate_property(screen_cover, "modulate:a", 0, 1, 2.3, Tween.TRANS_CUBIC)
+	else: # Make screen cover disappear
+		tween.interpolate_property(screen_cover, "modulate:a", 1, 0, 2.3, Tween.TRANS_CUBIC)
+		
 	tween.start()
 	
-	yield(tween,"tween_all_completed")
+	yield(tween,"tween_all_completed") # Wait for animation to finish
 	
-	screen_cover.visible = bruh
+	# If screen cover is visible, the player cannot control the camera
+	screen_cover.visible = show_screen_cover
 
-# Display the GUI for selecting profiles
+# Display the GUI for selecting profiles (the first screen the user sees when opening the program)
 # Should contain a "Start Fresh"-button, and a button for each saved profile.
 func show_profile_select() -> void:
 	yield(unload_profile(),"completed")
@@ -134,18 +136,22 @@ func load_profile(profile: ProfileConfig) -> void:
 	if ! is_instance_valid(profile):
 		return
 	
+	# Start unloading the current active profile, wait until finished
 	if is_instance_valid(active_profile):
 		yield(unload_profile(), "completed")
 	
+	# Get the playground/environment that the car will drive in
 	var env = Global.get_environment(profile.environment)
 	if env == null:
 		printerr("Invalid world: %s" % profile.environment)
 		return
 	
+	# Load the world, print error if unsuccessful
 	if ! yield(world.load_world(env), "completed"):
 		printerr("Could not load world: %s" % profile.environment)
 		return
 	
+	# If we switch to another profile, 
 	if active_profile != profile:
 		orig_profile = profile
 		active_profile = Util.duplicate_ref(profile)
