@@ -1,0 +1,3 @@
+/Users/Clabbe/Documents/Skola/Software Evolution Project/group1-smce-gd/build/_deps/fc-godot-cpp-subbuild/CMakeFiles/rebuild_cache.dir
+/Users/Clabbe/Documents/Skola/Software Evolution Project/group1-smce-gd/build/_deps/fc-godot-cpp-subbuild/CMakeFiles/edit_cache.dir
+/Users/Clabbe/Documents/Skola/Software Evolution Project/group1-smce-gd/build/_deps/fc-godot-cpp-subbuild/CMakeFiles/fc-godot-cpp-populate.dir

@@ -21,6 +21,7 @@ extends Reference
 # A mapping from a profile to the path (in system directory) of the profile
 var saved_profiles: Dictionary = {}
 
+# handles the loading of profiles
 func load_profiles() -> Array:
 	var profile_path = Global.usr_dir_plus("config/profiles")
 	var profiles = []
@@ -51,7 +52,7 @@ func load_profiles() -> Array:
 		var profile = ProfileConfig.new()
 		Util.inflate_ref(profile, parse_res.result)
 		
-		# Save the profile object and path to the profile file
+		# Save the profile object in the array(profiles) and path to the profile file in the dictionary(saved_profiles)
 		profiles.push_back(profile)
 		saved_profiles[profile] = path
 		
@@ -59,14 +60,18 @@ func load_profiles() -> Array:
 	
 	return profiles
 
-
+# Handles the saving of a profile
 func save_profile(profile: ProfileConfig) -> bool:
+	# get the path of the profile, and create a new Directory var
 	var profile_path = Global.usr_dir_plus("config/profiles")
 	var dir: Directory = Directory.new()
 	
+	# check if the path of the profile exist
 	if ! dir.dir_exists(profile_path) && ! Util.mkdir(profile_path, true):
 		return false
 	
+	# check if the profile is in the Dictionary saved_profiles(profile has been loaded)
+	# then set the corresponding path of profile to profile_path 
 	if saved_profiles.has(profile):
 		profile_path = saved_profiles[profile]
 	else:
@@ -76,12 +81,15 @@ func save_profile(profile: ProfileConfig) -> bool:
 			i += 1
 		profile_path += "/%d.json" % i
 	
+	# check if file for the profile exist and if it is possible to remove it
 	if dir.file_exists(profile_path) && dir.remove(profile_path) != OK:
 		printerr("FAILED TO DELETE EXISTING PROFILE FILE")
 		return false
 	
+	# create new File object
 	var file := File.new()
 	
+	# attempt to open the profile file
 	if file.open(profile_path, File.WRITE) != OK:
 		printerr("FAILED TO OPEN NEW PROFILE FILE")
 		return false
@@ -92,6 +100,7 @@ func save_profile(profile: ProfileConfig) -> bool:
 	file.store_string(content)
 	file.close()
 	
+	# set the path of the corresponding profile in the dictionary in order to save it
 	saved_profiles[profile] = profile_path
 	
 	print("saved profile: ", profile.profile_name)

@@ -1,0 +1,11 @@
+/Users/Clabbe/Documents/Skola/Software Evolution Project/group1-smce-gd/build/CMakeFiles/install/local.dir
+/Users/Clabbe/Documents/Skola/Software Evolution Project/group1-smce-gd/build/CMakeFiles/install/strip.dir
+/Users/Clabbe/Documents/Skola/Software Evolution Project/group1-smce-gd/build/CMakeFiles/install.dir
+/Users/Clabbe/Documents/Skola/Software Evolution Project/group1-smce-gd/build/CMakeFiles/list_install_components.dir
+/Users/Clabbe/Documents/Skola/Software Evolution Project/group1-smce-gd/build/CMakeFiles/godot-cpp.dir
+/Users/Clabbe/Documents/Skola/Software Evolution Project/group1-smce-gd/build/CMakeFiles/godot-smce.dir
+/Users/Clabbe/Documents/Skola/Software Evolution Project/group1-smce-gd/build/CMakeFiles/rebuild_cache.dir
+/Users/Clabbe/Documents/Skola/Software Evolution Project/group1-smce-gd/build/CMakeFiles/package_source.dir
+/Users/Clabbe/Documents/Skola/Software Evolution Project/group1-smce-gd/build/CMakeFiles/package.dir
+/Users/Clabbe/Documents/Skola/Software Evolution Project/group1-smce-gd/build/CMakeFiles/edit_cache.dir
+/Users/Clabbe/Documents/Skola/Software Evolution Project/group1-smce-gd/build/CMakeFiles/godotcpp-generated.dir

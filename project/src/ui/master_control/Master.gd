@@ -39,7 +39,7 @@ func _ready() -> void:
 	
 	show_profile_select()
 
-
+# handles inputEvents
 func _input(event: InputEvent):
 	if event.is_action_pressed("ui_home"):
 		print_stray_nodes()
@@ -89,7 +89,7 @@ func show_profile_select() -> void:
 	tween.interpolate_property(profile_select, "rect_scale", Vector2(10,10), Vector2(1,1), 0.4, Tween.TRANS_CUBIC)
 	tween.start()
 
-
+# handles the progression when a profile has been selected
 func _on_profile_selected(profile: ProfileConfig) -> void:
 	# checks if profile selected is valid
 	if ! is_instance_valid(profile):
@@ -112,11 +112,13 @@ func _on_profile_selected(profile: ProfileConfig) -> void:
 	yield(tween, "tween_all_completed")
 	profile_select.visible = false
 
-
+# reloads profile when "Reload" is pressed
 func reload_profile() -> void:
 	load_profile(orig_profile)
 
-
+# will enter this at start and every time we press "Reload" 
+# since we technically first unload in order to be able to reload
+# also every time we press "Switch" since we have to unload in order to switch profile
 func unload_profile() -> void:
 	yield(get_tree(), "idle_frame") # Resume execution the next frame
 	if ! is_instance_valid(active_profile):
@@ -131,12 +133,12 @@ func unload_profile() -> void:
 		hud.queue_free()
 	world.clear_world()
 
-
+# handles the progression when loading the profile that has been selected to be able to start the game
 func load_profile(profile: ProfileConfig) -> void:
 	if ! is_instance_valid(profile):
 		return
 	
-	# Start unloading the current active profile, wait until finished
+	# Start unloading the current active profile when "Reload" has been pressed, wait until finished
 	if is_instance_valid(active_profile):
 		yield(unload_profile(), "completed")
 	
@@ -151,20 +153,22 @@ func load_profile(profile: ProfileConfig) -> void:
 		printerr("Could not load world: %s" % profile.environment)
 		return
 	
-	# If we switch to another profile, 
+	# If we switch to another profile, (either pressing "start fresh" or on a saved profile)
 	if active_profile != profile:
 		orig_profile = profile
 		active_profile = Util.duplicate_ref(profile)
 	
-	
-	hud = hud_t.instance()
+	# SETUP all the resources every time a profile has been loaded 
+	# and apply them into the SmceHud variables
+	hud = hud_t.instance() # Apply the SmceHud menu when a profile has been loaded
 	hud.cam_ctl = world.cam_ctl
 	hud.profile = active_profile
 	hud.sketch_manager = sketch_manager
 	hud.master_manager = self
 	hud_attach.add_child(hud)
-	
 	hud.add_slots(profile.slots)
 	
+	#profile has been succesfully loaded and we stop the fading
 	fade_cover(false)
+	
 

@@ -21,12 +21,14 @@ var profile_name: String = "No Name"
 var environment: String = "playground/Playground"
 var slots: Array = []
 
+
 func type_info() -> Dictionary:
 	return {
 		"slots": SmceHud.Slot,
 	}
 
-
+# compare with another ProfileConfig(profile) object if 
+# the slot size, profile name, environment and elements in slots are equal
 func is_equal(other) -> bool:
 	if other.slots.size() != slots.size():
 		return false
