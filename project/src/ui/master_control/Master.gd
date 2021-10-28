@@ -31,8 +31,9 @@ onready var sketch_manager = $SketchManager
 var orig_profile: ProfileConfig = null
 var active_profile: ProfileConfig = null
 
-# sends signal "profile_selected" to method _on_profile_sel
+
 func _ready() -> void:
+	# Setup the signal "profile_selected" to call "_on_profile_sel"
 	profile_select.connect("profile_selected", self, "_on_profile_selected")
 	
 	profile_manager.load_profiles()
@@ -60,9 +61,9 @@ func fade_cover(show_screen_cover: bool):
 	
 	# Play fade in/out
 	if show_screen_cover: # Make screen cover appear
-		tween.interpolate_property(screen_cover, "modulate:a", 0, 1, 2.3, Tween.TRANS_CUBIC)
+		tween.interpolate_property(screen_cover, "modulate:a", 0, 1, 0.3, Tween.TRANS_CUBIC)
 	else: # Make screen cover disappear
-		tween.interpolate_property(screen_cover, "modulate:a", 1, 0, 2.3, Tween.TRANS_CUBIC)
+		tween.interpolate_property(screen_cover, "modulate:a", 1, 0, 0.3, Tween.TRANS_CUBIC)
 		
 	tween.start()
 	
