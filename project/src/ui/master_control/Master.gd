@@ -78,14 +78,7 @@ func show_profile_select() -> void:
 	active_profile = null
 	
 	# Play "zooming out" animation before showing the profile select GUI
-	var tween: Tween = TempTween.new()
-	add_child(tween)
-	profile_select.display_profiles(profile_manager.saved_profiles.keys())
-	profile_select.visible = true
-	profile_select.rect_pivot_offset = profile_select.rect_size / 2
-	tween.interpolate_property(profile_select, "modulate:a", 0, 1, 0.4, Tween.TRANS_CUBIC)
-	tween.interpolate_property(profile_select, "rect_scale", Vector2(10,10), Vector2(1,1), 0.4, Tween.TRANS_CUBIC)
-	tween.start()
+	profile_select.play_show_buttons_animation()
 
 # handles the progression when a profile has been selected
 func _on_profile_selected(profile: ProfileConfig) -> void:

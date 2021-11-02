@@ -22,29 +22,19 @@ extends Node
 var master_t = load("res://src/ui/master_control/Master.gd")
 var _master  = null
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
 # this var triggers when setting the profile_selector in other script
 var profile_selector_view = null setget set_view, get_view
 
 var orig_profile: ProfileConfig = null
 var active_profile: ProfileConfig = null
 
-#var profile_manager = ProfileManager.new()
-
 
 func _init():
 	print("ProfileSelectorViewModel")
-	
+
 	
 func _ready() -> void:
 	print("IN READY")
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
 
 
 func _on_profile_selected(profile: ProfileConfig) -> void:

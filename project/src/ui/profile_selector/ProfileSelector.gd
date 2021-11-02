@@ -34,7 +34,7 @@ func _ready() -> void:
 	vm.profile_selector_view = self
 	
 	# get reference to parent(Master)
-	vm._master = self.get_parent()
+	vm._master = get_parent()
 	
 	fresh_btn.connect("pressed", self, "_on_profile_pressed", [ProfileConfig.new()])
 
@@ -60,6 +60,17 @@ func play_hide_buttons_animation() -> Tween:
 	tween.interpolate_property(self, "rect_scale", Vector2(1,1), Vector2(10,10), 0.4, Tween.TRANS_CUBIC)
 	tween.start()
 	return tween
+
+# Play "zooming out" animation (before showing the profile select GUI)
+func play_show_buttons_animation() -> void: 
+	var tween: Tween = TempTween.new()
+	add_child(tween)
+	self.display_profiles(get_parent().profile_manager.saved_profiles.keys())
+	self.visible = true
+	self.rect_pivot_offset = self.rect_size / 2
+	tween.interpolate_property(self, "modulate:a", 0, 1, 0.4, Tween.TRANS_CUBIC)
+	tween.interpolate_property(self, "rect_scale", Vector2(10,10), Vector2(1,1), 0.4, Tween.TRANS_CUBIC)
+	tween.start()
 
 # send signal to master.gd when profile is selected
 func _on_profile_pressed(profile) -> void:
