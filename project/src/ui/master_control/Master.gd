@@ -32,8 +32,6 @@ var orig_profile: ProfileConfig = null
 var active_profile: ProfileConfig = null
 
 func _ready() -> void:
-	# Setup the signal "profile_selected" to call "_on_profile_sel"
-	#profile_select.connect("profile_selected", self, "_on_profile_selected")
 	profile_manager.load_profiles()
 	show_profile_select()
 
@@ -79,29 +77,6 @@ func show_profile_select() -> void:
 	
 	# Play "zooming out" animation before showing the profile select GUI
 	profile_select.play_show_buttons_animation()
-
-# handles the progression when a profile has been selected
-func _on_profile_selected(profile: ProfileConfig) -> void:
-	# checks if profile selected is valid
-	if ! is_instance_valid(profile):
-		printerr("Invalid profile selected")
-		return
-	
-	# play "zooming in" animation before changing the view to the playground scene
-	var tween: Tween = TempTween.new()
-	add_child(tween)
-	profile_select.rect_pivot_offset = profile_select.rect_size / 2	
-	tween.interpolate_property(profile_select, "modulate:a", 1, 0, 0.4, Tween.TRANS_CUBIC)
-	tween.interpolate_property(profile_select, "rect_scale", Vector2(1,1), Vector2(10,10), 0.4, Tween.TRANS_CUBIC)
-	tween.start()
-	
-	# Wait for 0.35 seconds before loading the profile 
-	yield(get_tree().create_timer(0.35), "timeout")
-	load_profile(profile)
-	
-	# Wait for the animation to complete before hiding the profile select GUI
-	yield(tween, "tween_all_completed")
-	profile_select.visible = false
 
 # reloads profile when "Reload" is pressed
 func reload_profile() -> void:
