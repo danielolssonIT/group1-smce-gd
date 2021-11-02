@@ -17,7 +17,6 @@
 
 extends Control
 
-
 var profile_button_t = preload("res://src/ui/profile_selector/ProfileButton.tscn")
 
 signal profile_selected 
@@ -26,14 +25,16 @@ onready var attach = $VBoxContainer/CenterContainer/MarginContainer/HBoxContaine
 onready var fresh_btn = attach.get_node("Button") # "Start Fresh" button
 
 
-
 const viewmodel_t = preload("res://src/ui/profile_selector/ProfileSelectorViewModel.gd")
-var vm = null
+var vm = null # profileViewModel var
 
 # Make sure "_on_profile_pressed" is called when button is pressed
 func _ready() -> void:
 	vm = viewmodel_t.new()
 	vm.profile_selector_view = self
+	
+	# get reference to parent(Master)
+	vm._master = self.get_parent()
 	
 	fresh_btn.connect("pressed", self, "_on_profile_pressed", [ProfileConfig.new()])
 
@@ -50,6 +51,15 @@ func display_profiles(arr: Array) -> void:
 		btn.display_profile(profile)
 		btn.connect("pressed", self, "_on_profile_pressed", [profile])
 		
+# play "zooming in" animation for hiding buttons to enter the playground
+func play_hide_buttons_animation() -> Tween:
+	var tween: Tween = TempTween.new()
+	add_child(tween)
+	self.rect_pivot_offset = self.rect_size / 2	
+	tween.interpolate_property(self, "modulate:a", 1, 0, 0.4, Tween.TRANS_CUBIC)
+	tween.interpolate_property(self, "rect_scale", Vector2(1,1), Vector2(10,10), 0.4, Tween.TRANS_CUBIC)
+	tween.start()
+	return tween
 
 # send signal to master.gd when profile is selected
 func _on_profile_pressed(profile) -> void:
