@@ -34,7 +34,6 @@ var active_profile: ProfileConfig = null
 func _ready() -> void:
 	# Setup the signal "profile_selected" to call "_on_profile_sel"
 	profile_select.connect("profile_selected", self, "_on_profile_selected")
-	
 	profile_manager.load_profiles()
 	
 	show_profile_select()

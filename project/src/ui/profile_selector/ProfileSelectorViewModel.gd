@@ -5,16 +5,17 @@ extends Node
 # var a = 2
 # var b = "text"
 
-var profile_selector = null
+# this var triggers when setting the profile_selector in other script
+var profile_selector_view = null setget set_view, get_view
 
-func _init(_profile_selector):
+
+func _init():
 	print("ProfileSelectorViewModel")
-	profile_selector = _profile_selector
 	
 
 func _ready() -> void:
-	# Setup the signal "profile_selected" to call "_on_profile_sel"
-	profile_selector.connect("profile_selected", self, "_on_profile_selected")
+	print("IN READY")
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -27,3 +28,14 @@ func _on_profile_selected(profile: ProfileConfig) -> void:
 	if ! is_instance_valid(profile):
 		printerr("Invalid profile selected")
 		return
+
+
+func set_view(view):
+	print("IN SET_VIEW")
+	profile_selector_view = view
+		# Setup the signal "profile_selected" to call "_on_profile_selected"
+	profile_selector_view.connect("profile_selected", self, "_on_profile_selected")
+
+
+func get_view():
+	return profile_selector_view

@@ -17,6 +17,7 @@
 
 extends Control
 
+
 var profile_button_t = preload("res://src/ui/profile_selector/ProfileButton.tscn")
 
 signal profile_selected 
@@ -24,12 +25,16 @@ signal profile_selected
 onready var attach = $VBoxContainer/CenterContainer/MarginContainer/HBoxContainer
 onready var fresh_btn = attach.get_node("Button") # "Start Fresh" button
 
-var viewmodel_t = preload("res://src/ui/profile_selector/ProfileSelectorViewModel.gd")
+
+
+const viewmodel_t = preload("res://src/ui/profile_selector/ProfileSelectorViewModel.gd")
 var vm = null
 
 # Make sure "_on_profile_pressed" is called when button is pressed
 func _ready() -> void:
-	vm = viewmodel_t.new(self)
+	vm = viewmodel_t.new()
+	vm.profile_selector_view = self
+	
 	fresh_btn.connect("pressed", self, "_on_profile_pressed", [ProfileConfig.new()])
 
 # displays saved profiles horizontally on the start page
