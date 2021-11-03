@@ -115,22 +115,24 @@ func save_profiles(profiles: Array) -> void:
 		if ! save_profile(profile):
 			print("Could not save profile: ", profile.profile_name)
 
-#
-
+# set the orig profile, from start it is always = null, when pressing a saved profile it is equal to the profile name
 func set_orig_profile(new_val: ProfileConfig) -> void:
 	var new_profile = "null" if new_val == null else new_val.profile_name
 	
 	print("ProfileManager - Setting original profile to: " + new_profile)
 	orig_profile = new_val
-	
+
+# return the orig_profile which is a profileConfig(profile_name, environment ,slot)
 func get_orig_profile() -> ProfileConfig:
 	return orig_profile
-	
+
+# set the active profile, always update the profile name when creating a new profile	
 func set_active_profile(new_val: ProfileConfig) -> void:
 	var new_profile = "null" if new_val == null else new_val.profile_name
 	
 	print("ProfileManager - Setting active profile to: " + new_profile)
 	active_profile = new_val
 	
+# return the active_profile which is a profileConfig(profile_name, environment ,slot)	
 func get_active_profile() -> ProfileConfig:
 	return active_profile

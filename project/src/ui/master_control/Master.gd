@@ -136,17 +136,21 @@ func load_profile(profile: ProfileConfig) -> void:
 	
 	#profile has been succesfully loaded and we stop the fading
 	fade_cover(false)
-	
+
+# set the orig profile(name of profile) only enters here when we save a profile
 func set_orig_profile(new_val: ProfileConfig) -> void:
 	print("Master - Setting original profile to: " + new_val.profile_name)
 	profile_manager.orig_profile = new_val
-	
+
+# return orig profile
 func get_orig_profile() -> ProfileConfig:
 	return profile_manager.orig_profile
-	
+
+# set the active profile(name of profile)
 func set_active_profile(new_val: ProfileConfig) -> void:
 	print("Master - Setting active profile to: " + new_val.profile_name)
 	profile_manager.active_profile = new_val
-	
+
+# get the active profile	
 func get_active_profile() -> ProfileConfig:
 	return profile_manager.active_profile
