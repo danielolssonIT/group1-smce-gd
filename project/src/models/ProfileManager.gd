@@ -21,6 +21,9 @@ extends Reference
 # A mapping from a profile to the path (in system directory) of the profile
 var saved_profiles: Dictionary = {}
 
+var orig_profile: ProfileConfig = null setget set_orig_profile, get_orig_profile
+var active_profile: ProfileConfig = null setget set_active_profile, get_active_profile
+
 # handles the loading of profiles
 func load_profiles() -> Array:
 	var profile_path = Global.usr_dir_plus("config/profiles")
@@ -112,3 +115,22 @@ func save_profiles(profiles: Array) -> void:
 		if ! save_profile(profile):
 			print("Could not save profile: ", profile.profile_name)
 
+#
+
+func set_orig_profile(new_val: ProfileConfig) -> void:
+	var new_profile = "null" if new_val == null else new_val.profile_name
+	
+	print("ProfileManager - Setting original profile to: " + new_profile)
+	orig_profile = new_val
+	
+func get_orig_profile() -> ProfileConfig:
+	return orig_profile
+	
+func set_active_profile(new_val: ProfileConfig) -> void:
+	var new_profile = "null" if new_val == null else new_val.profile_name
+	
+	print("ProfileManager - Setting active profile to: " + new_profile)
+	active_profile = new_val
+	
+func get_active_profile() -> ProfileConfig:
+	return active_profile
