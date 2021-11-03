@@ -14,7 +14,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
-
+class_name ProfileSelectorViewModel
 
 extends Node
 
@@ -29,9 +29,11 @@ var orig_profile: ProfileConfig = null
 var active_profile: ProfileConfig = null
 
 
-func _init():
+func _init(view):
 	print("ProfileSelectorViewModel")
-
+	profile_selector_view = view
+		# Setup the signal "profile_selected" to call "_on_profile_selected"
+	profile_selector_view.connect("profile_selected", self, "_on_profile_selected")
 	
 func _ready() -> void:
 	print("IN READY")
@@ -59,9 +61,7 @@ func _on_profile_selected(profile: ProfileConfig) -> void:
 
 func set_view(view):
 	print("IN SET_VIEW")
-	profile_selector_view = view
-		# Setup the signal "profile_selected" to call "_on_profile_selected"
-	profile_selector_view.connect("profile_selected", self, "_on_profile_selected")
+	
 
 
 func get_view():

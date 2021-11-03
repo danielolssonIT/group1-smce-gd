@@ -14,6 +14,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+class_name ProfileSelectorView
 
 extends Control
 
@@ -24,14 +25,11 @@ signal profile_selected
 onready var attach = $VBoxContainer/CenterContainer/MarginContainer/HBoxContainer
 onready var fresh_btn = attach.get_node("Button") # "Start Fresh" button
 
-
-const viewmodel_t = preload("res://src/ui/profile_selector/ProfileSelectorViewModel.gd")
-var vm = null # profileViewModel var
+var vm = null # the view model for profile selection
 
 # Make sure "_on_profile_pressed" is called when button is pressed
 func _ready() -> void:
-	vm = viewmodel_t.new()
-	vm.profile_selector_view = self
+	vm = ProfileSelectorViewModel.new(self)
 	
 	# get reference to parent(Master)
 	vm._master = get_parent()

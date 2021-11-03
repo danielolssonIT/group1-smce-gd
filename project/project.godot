@@ -89,6 +89,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/ui/master_control/ProfileManager.gd"
 }, {
+"base": "Control",
+"class": "ProfileSelectorView",
+"language": "GDScript",
+"path": "res://src/ui/profile_selector/ProfileSelector.gd"
+}, {
+"base": "Node",
+"class": "ProfileSelectorViewModel",
+"language": "GDScript",
+"path": "res://src/ui/profile_selector/ProfileSelectorViewModel.gd"
+}, {
 "base": "RigidBody",
 "class": "RayCar",
 "language": "GDScript",
@@ -186,6 +196,8 @@ _global_script_class_icons={
 "NotificationDisplay": "",
 "ProfileConfig": "",
 "ProfileManager": "",
+"ProfileSelectorView": "",
+"ProfileSelectorViewModel": "",
 "RayCar": "",
 "RayWheel": "",
 "SMCE": "",
