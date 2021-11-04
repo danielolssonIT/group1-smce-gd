@@ -35,9 +35,12 @@ onready var version_label: Label = $VBoxContainer/MarginContainer/Version
 
 var profile: ProfileConfig = ProfileConfig.new()
 var master_manager = null setget set_master_manager
+var profile_manager: ProfileManager = null
 
 func set_master_manager(mngr) -> void:
 	master_manager = mngr
+	profile_manager = master_manager.profile_manager
+
 	_reflect_profile()
 
 var unique_sketches: int = 0
@@ -56,12 +59,12 @@ func _ready():
 
 
 func _reflect_profile() -> void:
-	var profile: ProfileConfig = master_manager.active_profile
+	var profile: ProfileConfig = profile_manager.active_profile
 	
 	if ! is_instance_valid(profile):
 		return
 	
-	var pname = master_manager.active_profile.profile_name
+	var pname = profile_manager.active_profile.profile_name
 	
 	if profile_name_input.text != pname:
 		profile_name_input.text = pname
@@ -91,26 +94,28 @@ func _reload_profile() -> void:
 
 
 func _save_profile() -> void:
-	var profile_manager: ProfileManager = master_manager.profile_manager
-	if profile_manager.saved_profiles.has(master_manager.orig_profile):
-		var path: String = profile_manager.saved_profiles[master_manager.orig_profile]
-		profile_manager.saved_profiles[master_manager.active_profile] = path
-		profile_manager.saved_profiles.erase(master_manager.orig_profile)
+	if profile_manager.saved_profiles.has(profile_manager.orig_profile):
+		var path: String = profile_manager.saved_profiles[profile_manager.orig_profile]
+		profile_manager.saved_profiles[profile_manager.active_profile] = path
+		profile_manager.saved_profiles.erase(profile_manager.orig_profile)
 
-	profile_manager.save_profile(master_manager.active_profile)
-	master_manager.orig_profile = master_manager.active_profile
-	master_manager.active_profile = Util.duplicate_ref(master_manager.active_profile)
+	profile_manager.save_profile(profile_manager.active_profile)
+	profile_manager.orig_profile = profile_manager.active_profile
+	print("IN SETTINGPANE: _save_profile")
+	profile_manager.active_profile = Util.duplicate_ref(profile_manager.active_profile)
 
 
 func _change_profile_name(text: String) -> void:
-	master_manager.active_profile.profile_name = text
+	print("IN SETTINGPANE: _change_profile_name")
+	profile_manager.active_profile.profile_name = text
 
 
 func _on_world_selected(index: int) -> void:
-	master_manager.active_profile.environment = world_list.get_item_text(index)
-	master_manager.load_profile(master_manager.active_profile)
+	print("IN SETTINGPANE: _on_world_selected")
+	profile_manager.active_profile.environment = world_list.get_item_text(index)
+	master_manager.load_profile(profile_manager.active_profile)
 
 
 func _process(_delta) -> void:
 	_reflect_profile()
-	save_btn.disabled = master_manager.active_profile.is_equal(master_manager.orig_profile)
+	save_btn.disabled = profile_manager.active_profile.is_equal(profile_manager.orig_profile)

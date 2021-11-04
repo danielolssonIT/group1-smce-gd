@@ -28,9 +28,6 @@ onready var screen_cover = $ScreenCover
 var profile_manager = ProfileManager.new()
 onready var sketch_manager = $SketchManager
 
-var orig_profile: ProfileConfig = null setget set_orig_profile, get_orig_profile
-var active_profile: ProfileConfig = null setget set_active_profile, get_active_profile
-
 func _ready() -> void:
 	profile_manager.load_profiles()
 	show_profile_select()
@@ -73,6 +70,7 @@ func show_profile_select() -> void:
 	yield(unload_profile(),"completed")
 	yield(get_tree(), "idle_frame") # Wait for the next frame before continuing
 	profile_manager.orig_profile = null
+	print("IN MASTER: show_profile_select")
 	profile_manager.active_profile = null
 	
 	# Play "zooming out" animation before showing the profile select GUI
@@ -122,12 +120,14 @@ func load_profile(profile: ProfileConfig) -> void:
 	# If we switch to another profile, (either pressing "start fresh" or on a saved profile)
 	if profile_manager.active_profile != profile:
 		profile_manager.orig_profile = profile
+		print("IN MASTER: load profile ")
 		profile_manager.active_profile = Util.duplicate_ref(profile)
 	
 	# SETUP all the resources every time a profile has been loaded 
 	# and apply them into the SmceHud variables
 	hud = hud_t.instance() # Apply the SmceHud menu when a profile has been loaded
 	hud.cam_ctl = world.cam_ctl
+	print("MASTER: HUD PROFILE")
 	hud.profile = profile_manager.active_profile
 	hud.sketch_manager = sketch_manager
 	hud.master_manager = self
@@ -136,21 +136,3 @@ func load_profile(profile: ProfileConfig) -> void:
 	
 	#profile has been succesfully loaded and we stop the fading
 	fade_cover(false)
-
-# set the orig profile(name of profile) only enters here when we save a profile
-func set_orig_profile(new_val: ProfileConfig) -> void:
-	print("Master - Setting original profile to: " + new_val.profile_name)
-	profile_manager.orig_profile = new_val
-
-# return orig profile
-func get_orig_profile() -> ProfileConfig:
-	return profile_manager.orig_profile
-
-# set the active profile(name of profile)
-func set_active_profile(new_val: ProfileConfig) -> void:
-	print("Master - Setting active profile to: " + new_val.profile_name)
-	profile_manager.active_profile = new_val
-
-# get the active profile	
-func get_active_profile() -> ProfileConfig:
-	return profile_manager.active_profile

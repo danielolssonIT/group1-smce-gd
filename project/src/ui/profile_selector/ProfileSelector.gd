@@ -31,11 +31,8 @@ var vm = null # the view model for profile selection
 func _ready() -> void:
 	vm = ProfileSelectorViewModel.new(self)
 	
-	# get reference to parent(Master)
-	vm._master = get_parent()
-	
-	#line under not needed since line 51 takes care of connecting to the emitted signal
-	#fresh_btn.connect("pressed", self, "_on_profile_pressed", [ProfileConfig.new()])
+	#line under needed for the "start fresh" button 
+	fresh_btn.connect("pressed", self, "_on_profile_pressed", [ProfileConfig.new()])
 
 # displays saved profiles horizontally on the start page
 func display_profiles(arr: Array) -> void:

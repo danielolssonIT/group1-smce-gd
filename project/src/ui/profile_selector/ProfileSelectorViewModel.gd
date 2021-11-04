@@ -32,6 +32,7 @@ var active_profile: ProfileConfig = null
 func _init(view):
 	print("ProfileSelectorViewModel")
 	profile_selector_view = view
+	_master = view.get_parent() # get parent of profileSelector(master)
 		# Setup the signal "profile_selected" to call "_on_profile_selected"
 	profile_selector_view.connect("profile_selected", self, "_on_profile_selected")
 	
