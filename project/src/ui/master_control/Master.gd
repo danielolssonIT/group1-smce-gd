@@ -28,9 +28,15 @@ onready var screen_cover = $ScreenCover
 var profile_manager = ProfileManager.new()
 onready var sketch_manager = $SketchManager
 
+signal unload_profile_completed
+
 func _ready() -> void:
 	profile_manager.load_profiles()
 	show_profile_select()
+	profile_manager.connect(Signals.load_world, self, "_on_load_world")
+	profile_manager.connect(Signals.setup_hud, self, "_on_setup_hud")
+	profile_manager.connect(Signals.fade_cover, self, "_on_fade_cover")
+	profile_manager.connect(Signals.unload_profile, self, "_on_unload_profile")
 
 # handles inputEvents
 func _input(event: InputEvent):
@@ -38,12 +44,12 @@ func _input(event: InputEvent):
 		print_stray_nodes()
 	if is_instance_valid(profile_manager.active_profile):
 		if event.is_action_pressed("reload"):
-			load_profile(profile_manager.active_profile)
+			profile_manager.load_active_profile()
 		if event.is_action_pressed("ui_cancel"):
 			show_profile_select()
 
 # Fade in/out the screen cover (the background in the profile selector view)
-func fade_cover(show_screen_cover: bool):
+func _on_fade_cover(show_screen_cover: bool):
 	var tween: Tween = TempTween.new()
 	add_child(tween)
 	
@@ -67,45 +73,41 @@ func fade_cover(show_screen_cover: bool):
 # Display the GUI for selecting profiles (the first screen the user sees when opening the program)
 # Should contain a "Start Fresh"-button, and a button for each saved profile.
 func show_profile_select() -> void:
-	yield(unload_profile(),"completed")
+	yield(_on_unload_profile(),"completed")
 	yield(get_tree(), "idle_frame") # Wait for the next frame before continuing
 	profile_manager.orig_profile = null
 	print("IN MASTER: show_profile_select")
 	profile_manager.active_profile = null
+	
 	
 	# Play "zooming out" animation before showing the profile select GUI
 	profile_select.play_show_buttons_animation()
 
 # reloads profile when "Reload" is pressed
 func reload_profile() -> void:
-	load_profile(profile_manager.orig_profile)
-
+	#load_profile(profile_manager.orig_profile)
+	profile_manager.load_orig_profile()
+	
+	
 # will enter this at start and every time we press "Reload" 
 # since we technically first unload in order to be able to reload
 # also every time we press "Switch" since we have to unload in order to switch profile
-func unload_profile() -> void:
+func _on_unload_profile() -> void:
 	yield(get_tree(), "idle_frame") # Resume execution the next frame
 	if ! is_instance_valid(profile_manager.active_profile):
 		return
-	
 	# Wait for the animation to finish before continuing in this function
 	# but let the calling function/object continue its work.
 	# The animation should play in parallel with other processes in the program.
-	yield(fade_cover(true), "completed")
-
+	yield(_on_fade_cover(true), "completed")
+	
 	if is_instance_valid(hud):
 		hud.queue_free()
 	world.clear_world()
 
-# handles the progression when loading the profile that has been selected to be able to start the game
-func load_profile(profile: ProfileConfig) -> void:
-	if ! is_instance_valid(profile):
-		return
-	
-	# Start unloading the current active profile when "Reload" has been pressed, wait until finished
-	if is_instance_valid(profile_manager.active_profile):
-		yield(unload_profile(), "completed")
-	
+	emit_signal("unload_profile_completed")
+
+func _on_load_world(profile: ProfileConfig) -> void:
 	# Get the playground/environment that the car will drive in
 	var env = Global.get_environment(profile.environment)
 	if env == null:
@@ -116,13 +118,8 @@ func load_profile(profile: ProfileConfig) -> void:
 	if ! yield(world.load_world(env), "completed"):
 		printerr("Could not load world: %s" % profile.environment)
 		return
-	
-	# If we switch to another profile, (either pressing "start fresh" or on a saved profile)
-	if profile_manager.active_profile != profile:
-		profile_manager.orig_profile = profile
-		print("IN MASTER: load profile ")
-		profile_manager.active_profile = Util.duplicate_ref(profile)
-	
+		
+func _on_setup_hud(profile: ProfileConfig) -> void:
 	# SETUP all the resources every time a profile has been loaded 
 	# and apply them into the SmceHud variables
 	hud = hud_t.instance() # Apply the SmceHud menu when a profile has been loaded
@@ -134,5 +131,3 @@ func load_profile(profile: ProfileConfig) -> void:
 	hud_attach.add_child(hud)
 	hud.add_slots(profile.slots)
 	
-	#profile has been succesfully loaded and we stop the fading
-	fade_cover(false)

@@ -113,7 +113,7 @@ func _change_profile_name(text: String) -> void:
 func _on_world_selected(index: int) -> void:
 	print("IN SETTINGPANE: _on_world_selected")
 	profile_manager.active_profile.environment = world_list.get_item_text(index)
-	master_manager.load_profile(profile_manager.active_profile)
+	profile_manager.load_profile(profile_manager.active_profile)
 
 
 func _process(_delta) -> void:

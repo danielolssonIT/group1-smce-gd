@@ -18,11 +18,57 @@
 class_name ProfileManager
 extends Reference
 
+signal load_world
+signal setup_hud
+signal fade_cover
+signal unload_profile
+signal completed # for testing purposes
+
 # A mapping from a profile to the path (in system directory) of the profile
 var saved_profiles: Dictionary = {}
 
 var orig_profile: ProfileConfig = null setget set_orig_profile, get_orig_profile
 var active_profile: ProfileConfig = null setget set_active_profile, get_active_profile
+
+func _init(_master):
+	_master.connect("unload_profile_completed", self, "load_profile")
+
+
+func load_orig_profile() -> void:
+	load_profile(orig_profile)
+
+func load_active_profile() -> void:
+	load_profile(active_profile)
+
+func load_profile(profile: ProfileConfig) -> void:
+	if ! is_instance_valid(profile):
+		return
+	# Start unloading the current active profile when "Reload" has been pressed, wait until finished
+	if is_instance_valid(active_profile):
+		yield(unload_profile(), "completed") # gets stuck here
+	#load the world
+	emit_signal(Signals.load_world, profile)
+	
+	# If we switch to another profile, (either pressing "start fresh" or on a saved profile)
+	if active_profile != profile:
+		orig_profile = profile
+		print("IN MASTER: load profile ")
+		active_profile = Util.duplicate_ref(profile)
+	
+	#setup HUD
+	emit_signal(Signals.setup_hud, profile)
+	
+	#profile has been succesfully loaded and we stop the fading
+	emit_signal(Signals.fade_cover, false)
+	
+	
+# will enter this at start and every time we press "Reload" 
+# since we technically first unload in order to be able to reload
+# also every time we press "Switch" since we have to unload in order to switch profile
+func unload_profile() -> void:
+	#if ! is_instance_valid(active_profile):
+	#	return	
+	emit_signal(Signals.unload_profile)
 
 # handles the loading of profiles
 func load_profiles() -> Array:
