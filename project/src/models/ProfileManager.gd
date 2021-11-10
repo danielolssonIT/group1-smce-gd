@@ -29,9 +29,10 @@ var saved_profiles: Dictionary = {}
 
 var orig_profile: ProfileConfig = null setget set_orig_profile, get_orig_profile
 var active_profile: ProfileConfig = null setget set_active_profile, get_active_profile
+var _should_load_profile_on_unload_completed: bool = false
 
 func _init(_master):
-	_master.connect("unload_profile_completed", self, "load_profile")
+	_master.connect("unload_profile_completed", self, "_on_unload_profile_completed")
 
 
 func load_orig_profile() -> void:
@@ -45,7 +46,20 @@ func load_profile(profile: ProfileConfig) -> void:
 		return
 	# Start unloading the current active profile when "Reload" has been pressed, wait until finished
 	if is_instance_valid(active_profile):
-		yield(unload_profile(), "completed") # gets stuck here
+		#yield(unload_profile(), "completed") # gets stuck here
+		unload_profile()
+		_should_load_profile_on_unload_completed = true
+	else:
+		_load_profile(profile)
+	
+func _on_unload_profile_completed() -> void:
+	if _should_load_profile_on_unload_completed:
+		_load_profile(active_profile)
+		_should_load_profile_on_unload_completed = false
+
+# Should be called on receiving the signal "unload_profile_completed"
+# or when there is no active profile.
+func _load_profile(profile: ProfileConfig) -> void:
 	#load the world
 	emit_signal(Signals.load_world, profile)
 	

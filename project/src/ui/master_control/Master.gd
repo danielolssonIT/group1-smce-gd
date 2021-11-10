@@ -25,7 +25,7 @@ onready var hud_attach = $HUD
 onready var hud = null
 onready var screen_cover = $ScreenCover
 
-var profile_manager = ProfileManager.new()
+var profile_manager = ProfileManager.new(self)
 onready var sketch_manager = $SketchManager
 
 signal unload_profile_completed
@@ -130,4 +130,3 @@ func _on_setup_hud(profile: ProfileConfig) -> void:
 	hud.master_manager = self
 	hud_attach.add_child(hud)
 	hud.add_slots(profile.slots)
-	
