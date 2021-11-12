@@ -17,9 +17,10 @@
 
 extends Node
 
-onready var debug_canvas = DebugCanvas
-onready var focus_owner = FocusOwner
-onready var mod_manager = ModManager
+onready var debug_canvas 	= DebugCanvas
+onready var focus_owner 		= FocusOwner
+onready var mod_manager		= ModManager
+onready var profile_manager 	= ProfileManager
 
 var environments: Dictionary = {
 	"playground/Playground": preload("res://src/environments/playground/Playground.tscn"),

@@ -18,6 +18,10 @@ class_name ProfileSelectorViewModel
 
 extends Node
 
+var profile_manager = Global.profile_manager
+
+#onready var profile_manager = get_node("/root/ProfileManager")
+
 # var from Master.gd
 var master_t = load("res://src/ui/master_control/Master.gd")
 var _master  = null
@@ -53,7 +57,7 @@ func _on_profile_selected(profile: ProfileConfig) -> void:
 	
 	# Wait for 0.35 seconds before loading the profile 
 	yield(profile_selector_view.get_tree().create_timer(0.35), "timeout")
-	_master.profile_manager.load_profile(profile)
+	profile_manager.load_profile(profile)
 	
 	# Wait for the animation to complete before hiding the profile select GUI
 	yield(tween, "tween_all_completed")

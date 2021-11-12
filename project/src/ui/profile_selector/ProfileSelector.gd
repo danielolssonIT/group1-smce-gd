@@ -58,10 +58,10 @@ func play_hide_buttons_animation() -> Tween:
 	return tween
 
 # Play "zooming out" animation (before showing the profile select GUI)
-func play_show_buttons_animation() -> void: 
+func play_show_buttons_animation(profiles: Array) -> void: 
 	var tween: Tween = TempTween.new()
 	add_child(tween)
-	self.display_profiles(get_parent().profile_manager.saved_profiles.keys())
+	self.display_profiles(profiles)
 	self.visible = true
 	self.rect_pivot_offset = self.rect_size / 2
 	tween.interpolate_property(self, "modulate:a", 0, 1, 0.4, Tween.TRANS_CUBIC)

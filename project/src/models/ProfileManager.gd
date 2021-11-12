@@ -14,9 +14,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 #
+class_name Profile_Manager
 
-class_name ProfileManager
-extends Reference
 
 signal load_world
 signal setup_hud
