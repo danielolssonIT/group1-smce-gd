@@ -35,11 +35,13 @@ onready var version_label: Label = $VBoxContainer/MarginContainer/Version
 
 var profile: ProfileConfig = ProfileConfig.new()
 var master_manager = null setget set_master_manager
-var profile_manager: ProfileManager = null
+#var profile_manager: ProfileManager = null
+
+var profile_manager = Global.profile_manager
 
 func set_master_manager(mngr) -> void:
 	master_manager = mngr
-	profile_manager = master_manager.profile_manager
+	#profile_manager = master_manager.profile_manager
 
 	_reflect_profile()
 

@@ -80,6 +80,7 @@ func clear_view() -> void:
 	world.clear_world()
 
 func load_world(env) -> void:
+	yield(get_tree(), "idle_frame")
 	world.load_world(env)
 
 func _on_load_world(profile: ProfileConfig) -> void:

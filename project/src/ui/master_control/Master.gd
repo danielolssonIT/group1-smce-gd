@@ -25,7 +25,7 @@ onready var hud_attach = $HUD
 onready var hud = null
 onready var screen_cover = $ScreenCover
 
-var profile_manager = ProfileManager.new(self)
+var profile_manager = Global.profile_manager
 onready var sketch_manager = $SketchManager
 
 signal unload_profile_completed

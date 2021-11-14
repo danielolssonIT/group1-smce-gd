@@ -18,9 +18,9 @@ class_name ProfileSelectorViewModel
 
 extends Node
 
-var profile_manager = Global.profile_manager
+#var profile_manager = ProfileManager.new(self)
 
-#onready var profile_manager = get_node("/root/ProfileManager")
+var profile_manager = null
 
 # var from Master.gd
 var master_t = load("res://src/ui/master_control/Master.gd")
@@ -34,7 +34,9 @@ var active_profile: ProfileConfig = null
 
 
 func _init(view):
-	print("ProfileSelectorViewModel")
+	profile_manager = Global.profile_manager
+	print("INIT IN PROFILE_SELECTOR_VIEW_MODEL: " + str(profile_manager))
+	#print("ProfileSelectorViewModel")
 	profile_selector_view = view
 	_master = view.get_parent() # get parent of profileSelector(master)
 		# Setup the signal "profile_selected" to call "_on_profile_selected"

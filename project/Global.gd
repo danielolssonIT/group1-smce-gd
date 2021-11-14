@@ -20,7 +20,12 @@ extends Node
 onready var debug_canvas 	= DebugCanvas
 onready var focus_owner 		= FocusOwner
 onready var mod_manager		= ModManager
-onready var profile_manager 	= ProfileManager
+var profile_manager 		    = ProfileManager.new()
+
+
+#func _init() -> void:
+	#profile_manager = ProfileManager.new()
+
 
 var environments: Dictionary = {
 	"playground/Playground": preload("res://src/environments/playground/Playground.tscn"),
@@ -107,3 +112,12 @@ func _scan_named_classes(path: String) -> Dictionary:
 			instance.free()
 	
 	return named_classes
+
+func set_profile_manager(profile_manager) -> void:
+	pass
+	
+	
+func get_profile_manager():
+	pass
+	
+	
