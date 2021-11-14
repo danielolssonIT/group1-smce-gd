@@ -16,12 +16,6 @@
 #
 class_name ProfileManager
 
-
-signal load_world
-signal setup_hud
-signal fade_cover
-signal unload_profile
-signal completed # for testing purposes
 signal profile_loaded
 
 # A mapping from a profile to the path (in system directory) of the profile
@@ -66,15 +60,6 @@ func _load_profile(profile: ProfileConfig) -> void:
 		orig_profile = profile
 		print("IN MASTER: load profile ")
 		active_profile = Util.duplicate_ref(profile)
-	
-	#load the world
-	#emit_signal(Signals.load_world, profile)
-	
-	#setup HUD
-	#emit_signal(Signals.setup_hud, profile)
-	
-	#profile has been succesfully loaded and we stop the fading
-	#emit_signal(Signals.fade_cover, false)
 
 	#emit one signal for loading the world, setup the HUD and fade cover
 	emit_signal("profile_loaded", profile)

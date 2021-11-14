@@ -3,13 +3,7 @@ extends Node
 class_name MasterViewModel
 
 var master_view = null
-
 var profile_manager = null
-
-#onready var profile_manager = get_node("/root/ProfileManager")
-
-signal unload_profile_completed
-
 
 func _init(view):
 	profile_manager = Global.profile_manager
@@ -74,7 +68,7 @@ func get_profiles() -> Array:
 	
 func _on_profile_loaded(profile):
 	#leave playground in order to load new profile
-	leave_playground()
+	#yield(leave_playground(),"completed")
 	
 	load_world(profile)
 	setup_hud(profile)

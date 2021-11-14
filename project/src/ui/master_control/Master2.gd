@@ -51,9 +51,9 @@ func fade_cover(show_screen_cover: bool):
 	
 	# Play fade in/out
 	if show_screen_cover: # Make screen cover appear
-		tween.interpolate_property(screen_cover, "modulate:a", 0, 1, 0.3, Tween.TRANS_CUBIC)
+		tween.interpolate_property(screen_cover, "modulate:a", 0, 1, 1.3, Tween.TRANS_CUBIC)
 	else: # Make screen cover disappear
-		tween.interpolate_property(screen_cover, "modulate:a", 1, 0, 0.3, Tween.TRANS_CUBIC)
+		tween.interpolate_property(screen_cover, "modulate:a", 1, 0, 1.3, Tween.TRANS_CUBIC)
 		
 	tween.start()
 	
@@ -66,11 +66,13 @@ func fade_cover(show_screen_cover: bool):
 # Should contain a "Start Fresh"-button, and a button for each saved profile.
 func show_profile_select() -> void:
 	# Play "zooming out" animation before showing the profile select GUI
+	yield(vm.leave_playground(), "completed")
 	profile_select.play_show_buttons_animation(vm.get_profiles())
 
 # reloads profile when "Reload" is pressed
 func reload_profile() -> void:
-	#load_profile(profile_manager.orig_profile)
+	#leave playground in order to load new profile
+	yield(vm.leave_playground(),"completed")
 	vm.load_orig_profile()
 
 ###### NEW ADDED FUNCTIONS ################
