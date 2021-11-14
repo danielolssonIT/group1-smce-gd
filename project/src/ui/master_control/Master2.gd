@@ -39,6 +39,7 @@ func _ready() -> void:
 func _input(event: InputEvent):
 	if event.is_action_pressed("ui_home"):
 		print_stray_nodes()
+	vm._on_input(event)
 
 # Fade in/out the screen cover (the background in the profile selector view)
 func fade_cover(show_screen_cover: bool):
@@ -51,9 +52,9 @@ func fade_cover(show_screen_cover: bool):
 	
 	# Play fade in/out
 	if show_screen_cover: # Make screen cover appear
-		tween.interpolate_property(screen_cover, "modulate:a", 0, 1, 1.3, Tween.TRANS_CUBIC)
+		tween.interpolate_property(screen_cover, "modulate:a", 0, 1, 0.4, Tween.TRANS_CUBIC)
 	else: # Make screen cover disappear
-		tween.interpolate_property(screen_cover, "modulate:a", 1, 0, 1.3, Tween.TRANS_CUBIC)
+		tween.interpolate_property(screen_cover, "modulate:a", 1, 0, 0.4, Tween.TRANS_CUBIC)
 		
 	tween.start()
 	
@@ -71,7 +72,7 @@ func show_profile_select() -> void:
 
 # reloads profile when "Reload" is pressed
 func reload_profile() -> void:
-	#leave playground in order to load new profile
+	#leave playground in order to load profile again
 	yield(vm.leave_playground(),"completed")
 	vm.load_orig_profile()
 

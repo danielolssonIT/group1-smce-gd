@@ -8,7 +8,6 @@ var profile_manager = null
 func _init(view):
 	profile_manager = Global.profile_manager
 	print("INIT MASTERVIEWMODEL: " + str(profile_manager))
-	#print("MasterViewModel")
 	master_view = view
 	
 	profile_manager.load_profiles()
@@ -45,8 +44,10 @@ func load_world(profile: ProfileConfig) -> void:
 func setup_hud(profile: ProfileConfig) -> void:
 	master_view.setup_hud(profile.slots, profile) #call on func setup_hud in master2
 	
+# Don't know if this is needed anymore
+# It was in Master.gd before but doesn't seem to have any real effect ever
+# because the if cases are never executed
 func _on_input(event: InputEvent) -> void:
-	
 	if is_instance_valid(profile_manager.active_profile):
 		if event.is_action_pressed("reload"):
 			profile_manager.load_active_profile()
@@ -67,9 +68,6 @@ func get_profiles() -> Array:
 	return profile_manager.saved_profiles.keys()
 	
 func _on_profile_loaded(profile):
-	#leave playground in order to load new profile
-	#yield(leave_playground(),"completed")
-	
 	load_world(profile)
 	setup_hud(profile)
 	master_view.fade_cover(false)

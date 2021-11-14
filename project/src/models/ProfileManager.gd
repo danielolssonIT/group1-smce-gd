@@ -23,12 +23,6 @@ var saved_profiles: Dictionary = {}
 
 var orig_profile: ProfileConfig = null setget set_orig_profile, get_orig_profile
 var active_profile: ProfileConfig = null setget set_active_profile, get_active_profile
-var _should_load_profile_on_unload_completed: bool = false
-
-func _init():
-	pass
-	#_master.connect("unload_profile_completed", self, "_on_unload_profile_completed")
-
 
 func load_orig_profile() -> void:
 	load_profile(orig_profile)
@@ -39,18 +33,11 @@ func load_active_profile() -> void:
 func load_profile(profile: ProfileConfig) -> void:
 	if ! is_instance_valid(profile):
 		return
-	# Start unloading the current active profile when "Reload" has been pressed, wait until finished
+		
 	if is_instance_valid(active_profile):
-		#yield(unload_profile(), "completed") # gets stuck here
-		_load_profile(active_profile)
-		#_should_load_profile_on_unload_completed = true
-	else:
-		_load_profile(profile)
-	
-func _on_unload_profile_completed() -> void:
-	if _should_load_profile_on_unload_completed:
-		_load_profile(active_profile)
-		_should_load_profile_on_unload_completed = false
+		profile = active_profile
+		
+	_load_profile(profile)
 
 # Should be called on receiving the signal "unload_profile_completed"
 # or when there is no active profile.
@@ -58,7 +45,6 @@ func _load_profile(profile: ProfileConfig) -> void:
 	# If we switch to another profile, (either pressing "start fresh" or on a saved profile)
 	if active_profile != profile:
 		orig_profile = profile
-		print("IN MASTER: load profile ")
 		active_profile = Util.duplicate_ref(profile)
 
 	#emit one signal for loading the world, setup the HUD and fade cover

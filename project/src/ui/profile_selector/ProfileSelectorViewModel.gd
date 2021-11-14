@@ -18,33 +18,16 @@ class_name ProfileSelectorViewModel
 
 extends Node
 
-#var profile_manager = ProfileManager.new(self)
-
 var profile_manager = null
 
-# var from Master.gd
-var master_t = load("res://src/ui/master_control/Master.gd")
-var _master  = null
-
-# this var triggers when setting the profile_selector in other script
-var profile_selector_view = null setget set_view, get_view
-
-var orig_profile: ProfileConfig = null
-var active_profile: ProfileConfig = null
-
+var profile_selector_view = null
 
 func _init(view):
 	profile_manager = Global.profile_manager
-	print("INIT IN PROFILE_SELECTOR_VIEW_MODEL: " + str(profile_manager))
-	#print("ProfileSelectorViewModel")
 	profile_selector_view = view
-	_master = view.get_parent() # get parent of profileSelector(master)
-		# Setup the signal "profile_selected" to call "_on_profile_selected"
-	profile_selector_view.connect("profile_selected", self, "_on_profile_selected")
 	
-func _ready() -> void:
-	print("IN READY")
-
+	# Setup the signal "profile_selected" to call "_on_profile_selected"
+	profile_selector_view.connect("profile_selected", self, "_on_profile_selected")	
 
 func _on_profile_selected(profile: ProfileConfig) -> void:
 	print("ProfileSelectorViewModel: on_profile_selected called!")
@@ -64,12 +47,3 @@ func _on_profile_selected(profile: ProfileConfig) -> void:
 	# Wait for the animation to complete before hiding the profile select GUI
 	yield(tween, "tween_all_completed")
 	profile_selector_view.visible = false
-
-
-func set_view(view):
-	print("IN SET_VIEW")
-	
-
-
-func get_view():
-	return profile_selector_view
