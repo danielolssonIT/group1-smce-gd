@@ -20,7 +20,7 @@ extends Node
 onready var debug_canvas 	= DebugCanvas
 onready var focus_owner 		= FocusOwner
 onready var mod_manager		= ModManager
-var profile_manager 		    = ProfileManager.new()
+var profile_manager 		    = ObservableProfileManager.new()
 
 
 #func _init() -> void:
