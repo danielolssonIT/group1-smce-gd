@@ -25,7 +25,6 @@ onready var hud_attach = $HUD
 onready var hud = null
 onready var screen_cover = $ScreenCover
 
-
 signal unload_profile_completed
 
 var vm = null
@@ -84,28 +83,3 @@ func clear_view() -> void:
 func load_world(env) -> void:
 	yield(get_tree(), "idle_frame")
 	world.load_world(env)
-
-func _on_load_world(profile: ProfileConfig) -> void:
-	# Get the playground/environment that the car will drive in
-	var env = Global.get_environment(profile.environment)
-	if env == null:
-		printerr("Invalid world: %s" % profile.environment)
-		return
-	
-	# Load the world, print error if unsuccessful
-	if ! yield(world.load_world(env), "completed"):
-		printerr("Could not load world: %s" % profile.environment)
-		return
-	
-func setup_hud(slots: Array, active_profile) -> void:
-	# SETUP all the resources every time a profile has been loaded 
-	# and apply them into the SmceHud variables
-	hud = hud_t.instance() # Apply the SmceHud menu when a profile has been loaded
-	hud.cam_ctl = world.cam_ctl
-	print("MASTER: HUD PROFILE")
-	# FIX IN FUTURE WHEN REFACTORING SMCE HUD
-	hud.profile = active_profile
-	#hud.sketch_manager = sketch_manager
-	hud.master_manager = self
-	hud_attach.add_child(hud)
-	hud.add_slots(slots)

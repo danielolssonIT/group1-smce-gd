@@ -41,8 +41,8 @@ func load_world(profile: ProfileConfig) -> void:
 		printerr("Could not load world: %s" % profile.environment)
 		return
 		
-func setup_hud(profile: ProfileConfig) -> void:
-	master_view.setup_hud(profile.slots, profile) #call on func setup_hud in master2
+#func setup_hud(profile: ProfileConfig) -> void:
+	#master_view.setup_hud(profile.slots, profile) #call on func setup_hud in master2
 	
 # Don't know if this is needed anymore
 # It was in Master.gd before but doesn't seem to have any real effect ever
@@ -69,6 +69,6 @@ func get_profiles() -> Array:
 	
 func _on_profile_loaded(profile):
 	load_world(profile)
-	setup_hud(profile)
+	#setup_hud(profile)
 	master_view.fade_cover(false)
 	

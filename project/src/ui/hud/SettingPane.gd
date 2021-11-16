@@ -34,16 +34,9 @@ onready var boards_label: Label = $VBoxContainer/MarginContainer/VBoxContainer/B
 onready var version_label: Label = $VBoxContainer/MarginContainer/Version
 
 var profile: ProfileConfig = ProfileConfig.new()
-var master_manager = null setget set_master_manager
 #var profile_manager: ProfileManager = null
 
 var profile_manager = Global.profile_manager
-
-func set_master_manager(mngr) -> void:
-	master_manager = mngr
-	#profile_manager = master_manager.profile_manager
-
-	_reflect_profile()
 
 var unique_sketches: int = 0
 var boards: Array = []
@@ -58,7 +51,7 @@ func _ready():
 	version_label.text = "SMCE-gd: %s" % Global.version
 	
 	_update_envs()
-
+	_reflect_profile()
 
 func _reflect_profile() -> void:
 	var profile: ProfileConfig = profile_manager.active_profile
@@ -88,11 +81,11 @@ func _update_envs():
 
 
 func _switch_profile() -> void:
-	master_manager.show_profile_select()
+	get_node("/root/Master").show_profile_select()
 
 
 func _reload_profile() -> void:
-	master_manager.reload_profile()
+	get_node("/root/Master").reload_profile()
 
 
 func _save_profile() -> void:

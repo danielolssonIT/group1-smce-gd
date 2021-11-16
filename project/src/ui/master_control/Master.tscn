@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://src/ui/profile_selector/ProfileSelector.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/ui/hud/SmceHudView.gd" type="Script" id=2]
 [ext_resource path="res://src/utilities/controllable_camera/CamController.gd" type="Script" id=3]
 [ext_resource path="res://src/utilities/controllable_camera/ControllableCamera.gd" type="Script" id=4]
 [ext_resource path="res://src/utilities/controllable_camera/FreeCam.gd" type="Script" id=5]
@@ -37,6 +38,7 @@ speed = 15.0
 enabled = true
 
 [node name="HUD" type="Node" parent="."]
+script = ExtResource( 2 )
 
 [node name="ScreenCover" type="Panel" parent="."]
 anchor_right = 1.0

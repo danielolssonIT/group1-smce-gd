@@ -42,7 +42,6 @@ var paths: Dictionary = {}
 var cam_ctl: CamCtl = null
 var profile = null
 var sketch_manager: SketchManager = null
-var master_manager = null # A reference to Master.gd
 
 var disabled = false setget set_disabled
 
@@ -61,8 +60,6 @@ func _ready() -> void:
 	profile_control.connect("toggled", self, "_toggle_profile_control", [false])
 	profile_control_toggle.connect("pressed", self, "_toggle_profile_control", [true])
 	profile_screen_toggle.connect("button_down", self, "_toggle_profile_control", [false])
-	
-	profile_control.master_manager = master_manager
 	
 	sketch_manager = SketchManager.new()
 

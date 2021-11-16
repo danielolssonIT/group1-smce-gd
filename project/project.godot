@@ -154,6 +154,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/ui/hud/SmceHud.gd"
 }, {
+"base": "Node",
+"class": "SmceHudViewModel",
+"language": "GDScript",
+"path": "res://src/ui/hud/SmceHudViewModel.gd"
+}, {
 "base": "Tween",
 "class": "TempTween",
 "language": "GDScript",
@@ -214,6 +219,7 @@ _global_script_class_icons={
 "Sketch": "",
 "SketchManager": "",
 "SmceHud": "",
+"SmceHudViewModel": "",
 "TempTween": "",
 "Toolchain": "",
 "UartChannelConfig": "",

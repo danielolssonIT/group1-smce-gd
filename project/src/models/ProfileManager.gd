@@ -46,10 +46,10 @@ func _load_profile(profile: ProfileConfig) -> void:
 	if active_profile != profile:
 		orig_profile = profile
 		active_profile = Util.duplicate_ref(profile)
-
+	
 	#emit one signal for loading the world, setup the HUD and fade cover
 	emit_signal("profile_loaded", profile)
-	
+	#return true
 
 # handles the loading of profiles
 func load_profiles() -> Array:

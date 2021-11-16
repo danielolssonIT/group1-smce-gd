@@ -6,6 +6,7 @@ extends Node
 # var b = "text"
 
 var sketch_manager = SketchManager.new() 
+var world = World.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
