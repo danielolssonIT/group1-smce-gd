@@ -63,7 +63,8 @@ func _ready() -> void:
 	profile_screen_toggle.connect("button_down", self, "_toggle_profile_control", [false])
 	
 	profile_control.master_manager = master_manager
-
+	
+	sketch_manager = SketchManager.new()
 
 func _toggle_profile_control(show: bool) -> void:
 	var tween: Tween = TempTween.new()

@@ -25,7 +25,6 @@ onready var hud_attach = $HUD
 onready var hud = null
 onready var screen_cover = $ScreenCover
 
-onready var sketch_manager = $SketchManager
 
 signal unload_profile_completed
 
@@ -106,7 +105,7 @@ func setup_hud(slots: Array, active_profile) -> void:
 	print("MASTER: HUD PROFILE")
 	# FIX IN FUTURE WHEN REFACTORING SMCE HUD
 	hud.profile = active_profile
-	hud.sketch_manager = sketch_manager
+	#hud.sketch_manager = sketch_manager
 	hud.master_manager = self
 	hud_attach.add_child(hud)
 	hud.add_slots(slots)

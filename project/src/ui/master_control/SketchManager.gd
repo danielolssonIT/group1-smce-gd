@@ -25,18 +25,21 @@ var toolchains: Dictionary = {}
 
 
 func get_sketch(path: String):
+	print("IN GET_SKETCH")
 	if sketches.has(path):
 		return sketches[path]
 	return null
 
 
 func get_toolchain(sketch: Sketch):
+	print("IN GET_TOOLCHAIN")
 	if toolchains.has(sketch):
 		return toolchains[sketch]
 	return null
 
 
 func make_sketch(path: String):
+	print("IN MAKE_SKETCH")
 	var existing = get_sketch(path)
 	if existing != null:
 		return Util.err("Sketch already instanced")
