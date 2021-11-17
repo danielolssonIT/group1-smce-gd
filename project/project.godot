@@ -72,7 +72,7 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "IProfileManager",
 "language": "GDScript",
-"path": "res://src/models/IProfileManager.gd"
+"path": "res://src/models/profile_manager/IProfileManager.gd"
 }, {
 "base": "Node",
 "class": "MasterViewModel",
@@ -92,7 +92,7 @@ _global_script_classes=[ {
 "base": "IProfileManager",
 "class": "ObservableProfileManager",
 "language": "GDScript",
-"path": "res://src/models/ObservableProfileManager.gd"
+"path": "res://src/models/profile_manager/ObservableProfileManager.gd"
 }, {
 "base": "Reference",
 "class": "ProfileConfig",
@@ -102,12 +102,12 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "ProfileManager",
 "language": "GDScript",
-"path": "res://src/models/ProfileManager.gd"
+"path": "res://src/models/profile_manager/ProfileManager.gd"
 }, {
 "base": "Reference",
 "class": "ProfileManager2",
 "language": "GDScript",
-"path": "res://src/models/ProfileManager2.gd"
+"path": "res://src/models/profile_manager/ProfileManager2.gd"
 }, {
 "base": "Control",
 "class": "ProfileSelectorView",
