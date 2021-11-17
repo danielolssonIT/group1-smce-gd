@@ -49,17 +49,18 @@ func _ready():
 	profile_name_input.connect("text_changed", self, "_change_profile_name")
 	world_list.connect("item_selected", self, "_on_world_selected")
 	version_label.text = "SMCE-gd: %s" % Global.version
+	profile_manager.connect("profile_loaded", self, "_on_profile_loaded")
 	
 	_update_envs()
-	_reflect_profile()
 
-func _reflect_profile() -> void:
-	var profile: ProfileConfig = profile_manager.active_profile
-	
+func _on_profile_loaded(profile) -> void:
+	_reflect_profile(profile)
+
+func _reflect_profile(profile = profile_manager.active_profile) -> void:
 	if ! is_instance_valid(profile):
 		return
 	
-	var pname = profile_manager.active_profile.profile_name
+	var pname = profile.profile_name
 	
 	if profile_name_input.text != pname:
 		profile_name_input.text = pname

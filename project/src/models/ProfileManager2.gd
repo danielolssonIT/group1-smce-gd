@@ -32,14 +32,6 @@ func load_profile(profile: ProfileConfig) -> bool:
 	if ! is_instance_valid(profile):
 		return false
 		
-	if is_instance_valid(active_profile):
-		profile = active_profile
-		
-	return _load_profile(profile)
-
-# Should be called on receiving the signal "unload_profile_completed"
-# or when there is no active profile.
-func _load_profile(profile: ProfileConfig) -> bool:
 	# If we switch to another profile, (either pressing "start fresh" or on a saved profile)
 	if active_profile != profile:
 		orig_profile = profile
