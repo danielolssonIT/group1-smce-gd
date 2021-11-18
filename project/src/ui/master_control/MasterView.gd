@@ -17,20 +17,16 @@
 
 extends Node
 
-var hud_t = preload("res://src/ui/hud/SmceHud.tscn")
-
-onready var world = $World
 onready var profile_select = $ProfileSelect
-onready var hud_attach = $HUD
-onready var hud = null
 onready var screen_cover = $ScreenCover
-
-signal unload_profile_completed
 
 var vm = null
 
 func _ready() -> void:
 	vm = MasterViewModel.new(self) #MasterViewModel variable created
+	add_child(vm, true)
+	
+	vm.connect("clear_view", self, "_on_clear_view")
 	show_profile_select()
 
 # handles inputEvents
@@ -73,13 +69,3 @@ func reload_profile() -> void:
 	#leave playground in order to load profile again
 	yield(vm.leave_playground(),"completed")
 	vm.load_orig_profile()
-
-###### NEW ADDED FUNCTIONS ################
-func clear_view() -> void:
-	if is_instance_valid(hud):
-		hud.queue_free()
-	world.clear_world()
-
-func load_world(env) -> void:
-	yield(get_tree(), "idle_frame")
-	world.load_world(env)

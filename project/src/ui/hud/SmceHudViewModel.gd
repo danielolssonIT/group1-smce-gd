@@ -2,9 +2,6 @@ extends Node
 
 class_name SmceHudViewModel
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 signal update_hud
 
 var profile_manager = Global.profile_manager

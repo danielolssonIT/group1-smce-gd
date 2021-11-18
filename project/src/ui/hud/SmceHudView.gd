@@ -11,21 +11,14 @@ func _ready():
 	vm.connect("update_hud", self, "_on_update_hud")
 	
 func _on_update_hud(profile, slots) -> void:
-	print("IN ON_UPDATE_HUD")
+	print("IN SMCE_HUD_VIEW : ON_UPDATE_HUD")
 	if hud != null:
-		hud.queue_free()
-	# SETUP all the resources every time a profile has been loaded 
-	# and apply them into the SmceHud variables
-	hud = hud_t.instance() # Apply the SmceHud menu when a profile has been loaded
-	hud.cam_ctl = world.cam_ctl
-	# FIX IN FUTURE WHEN REFACTORING SMCE HUD
-	#hud.sketch_manager = sketch_manager
+		hud.queue_free() # Remove from the scene tree so the old HUD instance doesn't show
+	
+	hud = hud_t.instance() # Make a new HUD since we removed the old one
+	
+	hud.cam_ctl = get_node("/root/Master/World").cam_ctl
+	
 	add_child(hud)
 	hud.profile   = profile
 	hud.add_slots(slots)
-	
-	
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass

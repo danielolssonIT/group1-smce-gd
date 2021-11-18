@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/utilities/controllable_camera/CamController.gd" type="Script" id=1]
+[ext_resource path="res://src/ui/master_control/World.gd" type="Script" id=2]
+[ext_resource path="res://src/utilities/controllable_camera/ControllableCamera.gd" type="Script" id=3]
+[ext_resource path="res://src/utilities/controllable_camera/FreeCam.gd" type="Script" id=4]
+
+[node name="World" type="Node"]
+script = ExtResource( 2 )
+
+[node name="Camera" type="Node" parent="."]
+script = ExtResource( 1 )
+
+[node name="LockedCam" type="Spatial" parent="Camera"]
+transform = Transform( -0.848048, -0.101113, 0.520183, 0, 0.981627, 0.190809, -0.529919, 0.161815, -0.832467, 0, 12, 0 )
+script = ExtResource( 3 )
+
+[node name="FreeCam" type="Spatial" parent="Camera"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, 0 )
+script = ExtResource( 4 )
+
+[node name="InterpolatedCamera" type="InterpolatedCamera" parent="Camera"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, 0 )
+current = true
+near = 0.01
+far = 400.0
+target = NodePath("../FreeCam")
+speed = 15.0
+enabled = true

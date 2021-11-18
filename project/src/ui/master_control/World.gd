@@ -51,7 +51,6 @@ func _setup_cams() -> void:
 
 
 func load_world(scene: PackedScene) -> bool:
-	yield(get_tree(), "idle_frame")
 	var instance = scene.instance()
 	if is_instance_valid(instance):
 		yield(clear_world(), "completed")

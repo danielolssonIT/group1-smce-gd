@@ -2,6 +2,11 @@ extends Node
 
 class_name MasterViewModel
 
+signal clear_view
+
+var world_t = preload("res://src/ui/master_control/World.tscn")
+var world = null
+
 var master_view = null
 var profile_manager = null
 
@@ -12,6 +17,10 @@ func _init(view):
 	
 	profile_manager.load_profiles()
 	profile_manager.connect("profile_loaded", self, "_on_profile_loaded")
+
+func _ready():
+	world = world_t.instance()
+	get_parent().add_child(world)
 
 # will enter this at start and every time we press "Reload" 
 # since we technically first unload in order to be able to reload
@@ -26,8 +35,11 @@ func leave_playground() -> void:
 	yield(master_view.fade_cover(true), "completed")
 	
 	#call on clear_view function in Master2.gd
-	master_view.clear_view()
+	clear_view()
 	
+func clear_view():
+	emit_signal("clear_view")
+	world.clear_world()
 
 func load_world(profile: ProfileConfig) -> void:
 	# Get the playground/environment that the car will drive in
@@ -37,12 +49,10 @@ func load_world(profile: ProfileConfig) -> void:
 		return
 	
 	# Load the world, print error if unsuccessful
-	if ! yield(master_view.load_world(env), "completed"):
+	if ! yield(world.load_world(env), "completed"):
 		printerr("Could not load world: %s" % profile.environment)
 		return
 		
-#func setup_hud(profile: ProfileConfig) -> void:
-	#master_view.setup_hud(profile.slots, profile) #call on func setup_hud in master2
 	
 # Don't know if this is needed anymore
 # It was in Master.gd before but doesn't seem to have any real effect ever
