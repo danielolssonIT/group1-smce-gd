@@ -112,7 +112,7 @@ _global_script_classes=[ {
 "base": "Control",
 "class": "ProfileSelectorView",
 "language": "GDScript",
-"path": "res://src/ui/profile_selector/ProfileSelector.gd"
+"path": "res://src/ui/profile_selector/ProfileSelectorView.gd"
 }, {
 "base": "Node",
 "class": "ProfileSelectorViewModel",

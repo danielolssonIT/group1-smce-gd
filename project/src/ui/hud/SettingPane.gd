@@ -33,9 +33,6 @@ onready var boards_label: Label = $VBoxContainer/MarginContainer/VBoxContainer/B
 
 onready var version_label: Label = $VBoxContainer/MarginContainer/Version
 
-#var profile: ProfileConfig = ProfileConfig.new()
-#var profile_manager: ProfileManager = null
-
 var profile_manager = Global.profile_manager
 
 var unique_sketches: int = 0
