@@ -35,11 +35,8 @@ func leave_playground() -> void:
 	yield(master_view.fade_cover(true), "completed")
 	
 	#call on clear_view function in Master2.gd
-	clear_view()
-	
-func clear_view():
-	emit_signal("clear_view")
 	world.clear_world()
+	
 
 func load_world(profile: ProfileConfig) -> void:
 	# Get the playground/environment that the car will drive in

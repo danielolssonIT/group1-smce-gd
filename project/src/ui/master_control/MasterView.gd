@@ -26,7 +26,6 @@ func _ready() -> void:
 	vm = MasterViewModel.new(self) #MasterViewModel variable created
 	add_child(vm, true)
 	
-	vm.connect("clear_view", self, "_on_clear_view")
 	show_profile_select()
 
 # handles inputEvents
