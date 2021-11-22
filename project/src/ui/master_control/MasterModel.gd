@@ -1,5 +1,6 @@
 extends Node
 
+var profile_manager = Global.profile_manager
 #var sketch_manager = SketchManager.new() 
 #var world = World.new()
 

@@ -26,8 +26,9 @@ func _ready() -> void:
 	vm = MasterViewModel.new(self) #MasterViewModel variable created
 	add_child(vm, true)
 	
-	show_profile_select()
+	profile_select.play_show_buttons_animation(vm.get_profiles())
 
+	vm.connect("show_playground", self, "_on_show_playground")
 # handles inputEvents
 func _input(event: InputEvent):
 	if event.is_action_pressed("ui_home"):
@@ -59,12 +60,20 @@ func fade_cover(show_screen_cover: bool):
 # Display the GUI for selecting profiles (the first screen the user sees when opening the program)
 # Should contain a "Start Fresh"-button, and a button for each saved profile.
 func show_profile_select() -> void:
+	yield(fade_cover(true), "completed")
 	# Play "zooming out" animation before showing the profile select GUI
 	yield(vm.leave_playground(), "completed")
 	profile_select.play_show_buttons_animation(vm.get_profiles())
 
 # reloads profile when "Reload" is pressed
 func reload_profile() -> void:
+	yield(fade_cover(true), "completed")
+	
 	#leave playground in order to load profile again
 	yield(vm.leave_playground(),"completed")
 	vm.load_orig_profile()
+	
+	
+func _on_show_playground() -> void:
+	yield(fade_cover(false), "completed")
+	

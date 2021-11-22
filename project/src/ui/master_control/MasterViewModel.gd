@@ -3,12 +3,14 @@ extends Node
 class_name MasterViewModel
 
 signal clear_view
+signal show_playground
 
 var world_t = preload("res://src/ui/master_control/World.tscn")
 var world = null
 
 var master_view = null
 var profile_manager = null
+
 
 func _init(view):
 	profile_manager = Global.profile_manager
@@ -26,17 +28,17 @@ func _ready():
 # since we technically first unload in order to be able to reload
 # also every time we press "Switch" since we have to unload in order to switch profile
 func leave_playground() -> void:
-	yield(master_view.get_tree(), "idle_frame") # Resume execution the next frame
+	yield(get_tree(), "idle_frame") # Resume execution the next frame
 	if ! is_instance_valid(profile_manager.active_profile):
 		return
 	# Wait for the animation to finish before continuing in this function
 	# but let the calling function/object continue its work.
 	# The animation should play in parallel with other processes in the program.
-	yield(master_view.fade_cover(true), "completed")
+	
+	#yield(master_view.fade_cover(true), "completed")
 	
 	#call on clear_view function in Master2.gd
 	world.clear_world()
-	
 
 func load_world(profile: ProfileConfig) -> void:
 	# Get the playground/environment that the car will drive in
@@ -77,5 +79,7 @@ func get_profiles() -> Array:
 func _on_profile_loaded(profile):
 	load_world(profile)
 	#setup_hud(profile)
-	master_view.fade_cover(false)
+	#master_view.fade_cover(false)
+	emit_signal("show_playground")
+	
 	
