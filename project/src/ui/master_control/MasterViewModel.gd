@@ -4,18 +4,17 @@ class_name MasterViewModel
 
 signal clear_view
 signal show_playground
+signal leave_playground
 
 var world_t = preload("res://src/ui/master_control/World.tscn")
 var world = null
 
-var master_view = null
 var profile_manager = null
 
 
 func _init(view):
 	profile_manager = Global.profile_manager
 	print("INIT MASTERVIEWMODEL: " + str(profile_manager))
-	master_view = view
 	
 	profile_manager.load_profiles()
 	profile_manager.connect("profile_loaded", self, "_on_profile_loaded")
@@ -31,13 +30,7 @@ func leave_playground() -> void:
 	yield(get_tree(), "idle_frame") # Resume execution the next frame
 	if ! is_instance_valid(profile_manager.active_profile):
 		return
-	# Wait for the animation to finish before continuing in this function
-	# but let the calling function/object continue its work.
-	# The animation should play in parallel with other processes in the program.
-	
-	#yield(master_view.fade_cover(true), "completed")
-	
-	#call on clear_view function in Master2.gd
+
 	world.clear_world()
 
 func load_world(profile: ProfileConfig) -> void:
@@ -52,16 +45,6 @@ func load_world(profile: ProfileConfig) -> void:
 		printerr("Could not load world: %s" % profile.environment)
 		return
 		
-	
-# Don't know if this is needed anymore
-# It was in Master.gd before but doesn't seem to have any real effect ever
-# because the if cases are never executed
-func _on_input(event: InputEvent) -> void:
-	if is_instance_valid(profile_manager.active_profile):
-		if event.is_action_pressed("reload"):
-			profile_manager.load_active_profile()
-		if event.is_action_pressed("ui_cancel"):
-			master_view.show_profile_select()
 
 func clear_profiles() -> void:
 	yield(leave_playground(),"completed")
@@ -78,8 +61,6 @@ func get_profiles() -> Array:
 	
 func _on_profile_loaded(profile):
 	load_world(profile)
-	#setup_hud(profile)
-	#master_view.fade_cover(false)
 	emit_signal("show_playground")
 	
 	

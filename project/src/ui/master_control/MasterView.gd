@@ -29,12 +29,16 @@ func _ready() -> void:
 	profile_select.play_show_buttons_animation(vm.get_profiles())
 
 	vm.connect("show_playground", self, "_on_show_playground")
+	vm.connect("leave_playground", self, "_on_leave_playground")
 # handles inputEvents
 func _input(event: InputEvent):
 	if event.is_action_pressed("ui_home"):
 		print_stray_nodes()
-	vm._on_input(event)
-
+	if event.is_action_pressed("reload"):
+		reload_profile()
+	if event.is_action_pressed("ui_cancel"):
+		show_profile_select()
+	
 # Fade in/out the screen cover (the background in the profile selector view)
 func fade_cover(show_screen_cover: bool):
 	var tween: Tween = TempTween.new()
@@ -73,7 +77,9 @@ func reload_profile() -> void:
 	yield(vm.leave_playground(),"completed")
 	vm.load_orig_profile()
 	
-	
 func _on_show_playground() -> void:
 	yield(fade_cover(false), "completed")
+	
+func _on_leave_playground() -> void:
+	show_profile_select()	
 	
