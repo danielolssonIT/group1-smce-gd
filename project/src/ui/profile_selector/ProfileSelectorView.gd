@@ -32,7 +32,7 @@ func _ready() -> void:
 	add_child(vm, true)
 	
 	#line under needed for the "start fresh" button 
-	fresh_btn.connect("pressed", self, "_on_profile_pressed", [ProfileConfig.new()])
+	fresh_btn.connect("pressed", self, "_on_profile_pressed", [vm.get_fresh_profile()])
 	vm.connect("hide_buttons", self, "_on_hide_buttons")
 	vm.connect("hide_profile_select", self, "_on_hide_profile_select")
 	

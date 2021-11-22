@@ -42,3 +42,7 @@ func hide_profile_select(profile: ProfileConfig) -> void:
 	
 	emit_signal("hide_profile_select")
 	
+func get_fresh_profile():
+	return ProfileConfig.new()
+	
+	
