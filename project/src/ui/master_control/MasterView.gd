@@ -81,5 +81,5 @@ func _on_show_playground() -> void:
 	yield(fade_cover(false), "completed")
 	
 func _on_leave_playground() -> void:
-	show_profile_select()	
+	show_profile_select()
 	

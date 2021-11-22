@@ -2,7 +2,6 @@ extends Node
 
 var hud_t = preload("res://src/ui/hud/SmceHud.tscn")
 var hud = null
-onready var world = get_node("/root/Master/World")
 var vm = SmceHudViewModel.new()
 
 # Called when the node enters the scene tree for the first time.

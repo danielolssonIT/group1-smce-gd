@@ -20,8 +20,6 @@ extends Control
 
 var profile_button_t = preload("res://src/ui/profile_selector/ProfileButton.tscn")
 
-signal profile_selected 
-
 onready var attach = $VBoxContainer/CenterContainer/MarginContainer/HBoxContainer
 onready var fresh_btn = attach.get_node("Button") # "Start Fresh" button
 
@@ -31,9 +29,13 @@ var vm = null # the view model for profile selection
 func _ready() -> void:
 	vm = ProfileSelectorViewModel.new(self)
 	
+	add_child(vm, true)
+	
 	#line under needed for the "start fresh" button 
 	fresh_btn.connect("pressed", self, "_on_profile_pressed", [ProfileConfig.new()])
-
+	vm.connect("hide_buttons", self, "_on_hide_buttons")
+	vm.connect("hide_profile_select", self, "_on_hide_profile_select")
+	
 # displays saved profiles horizontally on the start page
 func display_profiles(arr: Array) -> void:
 	# removes all saved profile buttons 
@@ -70,6 +72,11 @@ func play_show_buttons_animation(profiles: Array) -> void:
 
 # send signal to master.gd when profile is selected
 func _on_profile_pressed(profile) -> void:
-	emit_signal("profile_selected", profile)
+	vm.hide_profile_select(profile)
+	
 
+func _on_hide_buttons() -> void:
+	play_hide_buttons_animation()
 
+func _on_hide_profile_select() -> void:
+	self.visible = false
