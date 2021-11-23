@@ -12,7 +12,7 @@ var world = null
 var profile_manager = null
 
 
-func _init(view):
+func _init():
 	profile_manager = Global.profile_manager
 	print("INIT MASTERVIEWMODEL: " + str(profile_manager))
 	

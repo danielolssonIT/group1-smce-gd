@@ -48,6 +48,7 @@ func _ready():
 	version_label.text = "SMCE-gd: %s" % Global.version
 	profile_manager.connect("profile_loaded", self, "_on_profile_loaded")
 	
+	_reflect_profile()
 	_update_envs()
 
 func _on_profile_loaded(profile) -> void:
@@ -110,5 +111,5 @@ func _on_world_selected(index: int) -> void:
 
 
 func _process(_delta) -> void:
-	_reflect_profile()
+	#_reflect_profile()
 	save_btn.disabled = profile_manager.active_profile.is_equal(profile_manager.orig_profile)

@@ -23,7 +23,7 @@ var profile_manager = null
 signal hide_buttons
 signal hide_profile_select
 
-func _init(view):
+func _init():
 	profile_manager = Global.profile_manager
 
 func hide_profile_select(profile: ProfileConfig) -> void:

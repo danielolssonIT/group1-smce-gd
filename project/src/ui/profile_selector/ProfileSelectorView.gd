@@ -27,7 +27,7 @@ var vm = null # the view model for profile selection
 
 # Make sure "_on_profile_pressed" is called when button is pressed
 func _ready() -> void:
-	vm = ProfileSelectorViewModel.new(self)
+	vm = ProfileSelectorViewModel.new()
 	
 	add_child(vm, true)
 	
@@ -73,7 +73,6 @@ func play_show_buttons_animation(profiles: Array) -> void:
 # send signal to master.gd when profile is selected
 func _on_profile_pressed(profile) -> void:
 	vm.hide_profile_select(profile)
-	
 
 func _on_hide_buttons() -> void:
 	play_hide_buttons_animation()

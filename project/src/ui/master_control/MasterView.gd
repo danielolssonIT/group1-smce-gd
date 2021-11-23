@@ -23,13 +23,14 @@ onready var screen_cover = $ScreenCover
 var vm = null
 
 func _ready() -> void:
-	vm = MasterViewModel.new(self) #MasterViewModel variable created
+	vm = MasterViewModel.new() #MasterViewModel variable created
 	add_child(vm, true)
 	
 	profile_select.play_show_buttons_animation(vm.get_profiles())
 
 	vm.connect("show_playground", self, "_on_show_playground")
 	vm.connect("leave_playground", self, "_on_leave_playground")
+	
 # handles inputEvents
 func _input(event: InputEvent):
 	if event.is_action_pressed("ui_home"):
