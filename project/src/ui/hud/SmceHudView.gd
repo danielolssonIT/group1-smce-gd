@@ -16,7 +16,7 @@ func _on_update_hud(profile, slots) -> void:
 	
 	hud = hud_t.instance() # Make a new HUD since we removed the old one
 	
-	hud.cam_ctl = get_node("/root/Master/World").cam_ctl
+	hud.cam_ctl = get_node("/root/Master/Node/World").cam_ctl
 	
 	add_child(hud)
 	hud.profile   = profile

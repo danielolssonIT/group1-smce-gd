@@ -75,6 +75,11 @@ _global_script_classes=[ {
 "path": "res://src/models/profile_manager/IProfileManager.gd"
 }, {
 "base": "Node",
+"class": "MasterModel",
+"language": "GDScript",
+"path": "res://src/ui/master_control/MasterModel.gd"
+}, {
+"base": "Node",
 "class": "MasterViewModel",
 "language": "GDScript",
 "path": "res://src/ui/master_control/MasterViewModel.gd"
@@ -228,6 +233,7 @@ _global_script_class_icons={
 "GDResult": "",
 "GpioDriverConfig": "",
 "IProfileManager": "",
+"MasterModel": "",
 "MasterViewModel": "",
 "NodeVisualizer": "",
 "NotificationDisplay": "",
