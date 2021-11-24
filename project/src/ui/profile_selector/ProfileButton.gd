@@ -29,7 +29,7 @@ func _ready():
 	btn.connect("pressed", self, "emit_signal", ["pressed"])
 
 # displays a single profile button
-func display_profile(profile: ProfileConfig):
+func display_profile(profile):
 	name_label.text = "\n" + profile.profile_name
 	var env_exists: bool = Global.environments.has(profile.environment)
 	if !env_exists:

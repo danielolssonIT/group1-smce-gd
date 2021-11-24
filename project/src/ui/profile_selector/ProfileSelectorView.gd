@@ -72,7 +72,7 @@ func play_show_buttons_animation(profiles: Array) -> void:
 
 # send signal to master.gd when profile is selected
 func _on_profile_pressed(profile) -> void:
-	vm.hide_profile_select(profile)
+	vm.load_profile(profile)
 
 func _on_hide_buttons() -> void:
 	play_hide_buttons_animation()

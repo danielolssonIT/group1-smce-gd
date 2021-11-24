@@ -25,6 +25,8 @@ signal active_profile_loaded
 signal orig_profile_loaded
 signal profile_saved
 signal profiles_saved
+signal active_profile_changed
+signal orig_profile_changed
 
 # Fake variables that mimic those in the actual ProfileManager
 # (included here so we don't break any current references to them)
@@ -36,8 +38,9 @@ var saved_profiles = null setget set_saved_profiles, get_saved_profiles
 var _profile_manager = ProfileManager2.new()
 
 # The wrapping functions that emit signals upon success
-func load_profile(profile: ProfileConfig) -> void:
+func load_profile(profile) -> void:
 	var success = _profile_manager.load_profile(profile)
+	_profile_manager.active_profile.connect("profile_changed", self, "_on_active_profile_changed")
 	if success: emit_signal("profile_loaded", profile)
 	
 func load_profiles() -> Array:
@@ -58,30 +61,45 @@ func load_orig_profile() -> void:
 		emit_signal("orig_profile_loaded", _profile_manager.orig_profile)
 		emit_signal("profile_loaded", _profile_manager.orig_profile)
 	
-func save_profile(profile: ProfileConfig) -> void:
+func save_profile(profile) -> void:
 	var success = _profile_manager.save_profile(profile)
 	if success: emit_signal("profile_saved", profile)	
 		
 func save_profiles(profiles: Array) -> void:
 	var success = _profile_manager.save_profiles(profiles)
-	if success: emit_signal("profiles_saved", profiles)	
+	if success: emit_signal("profiles_saved", profiles)
 
 # Wrapping getters and setters
 func get_active_profile():
 	return _profile_manager.active_profile
 
 func set_active_profile(value):
-	_profile_manager.active_profile	= value
+	_profile_manager.active_profile = value
+	
+	if value != null:
+		# Connect to the new active profile, to get signaled when its variables change
+		value.connect("profile_changed", self, "_on_active_profile_changed")
+		# Send signal that the active profile has changed (e.g. so the save button gets updated)
+		emit_signal("active_profile_changed", value)
 
 func get_orig_profile():
 	return _profile_manager.orig_profile	
 	
 func set_orig_profile(value):
-	_profile_manager.orig_profile	= value
+	_profile_manager.orig_profile = value
+	
+	if value != null:
+		value.connect("profile_changed", self, "_on_orig_profile_changed")
 	
 func get_saved_profiles():
 	return _profile_manager.saved_profiles	
 	
 func set_saved_profiles(value):
-	_profile_manager.saved_profiles	= value
+	_profile_manager.saved_profiles = value
 
+# SIGNAL HANDLERS
+func _on_active_profile_changed(active_profile) -> void:
+	emit_signal("active_profile_changed", active_profile)
+	
+func _on_orig_profile_changed(orig_profile) -> void:
+	emit_signal("orig_profile_changed", orig_profile)

@@ -4,7 +4,7 @@
 [ext_resource path="res://src/ui/themes/regular_button/disabled.tres" type="StyleBox" id=2]
 [ext_resource path="res://src/ui/themes/regular_button/normal.tres" type="StyleBox" id=3]
 [ext_resource path="res://src/ui/themes/regular_button/focus.tres" type="StyleBox" id=4]
-[ext_resource path="res://src/ui/hud/SettingPane.gd" type="Script" id=5]
+[ext_resource path="res://src/ui/hud/SettingPaneView.gd" type="Script" id=5]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.0941176, 0.0941176, 0.0941176, 1 )

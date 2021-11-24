@@ -69,6 +69,9 @@ func _reflect_profile(profile = profile_manager.active_profile) -> void:
 	for slot in profile.slots:
 		map[slot.path] = null
 	
+	var map_size = map.size()
+	var profile_slots_size = profile.slots.size()
+	
 	sketches_label.text = "Sketches: %d" % map.size()
 	
 	world_list.select(Global.environments.keys().find(profile.environment))
@@ -111,5 +114,4 @@ func _on_world_selected(index: int) -> void:
 
 
 func _process(_delta) -> void:
-	#_reflect_profile()
 	save_btn.disabled = profile_manager.active_profile.is_equal(profile_manager.orig_profile)

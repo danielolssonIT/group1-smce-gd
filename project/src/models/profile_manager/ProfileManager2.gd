@@ -19,8 +19,8 @@ class_name ProfileManager2
 # A mapping from a profile to the path (in system directory) of the profile
 var saved_profiles: Dictionary = {}
 
-var orig_profile: ProfileConfig = null setget set_orig_profile, get_orig_profile
-var active_profile: ProfileConfig = null setget set_active_profile, get_active_profile
+var orig_profile = null setget set_orig_profile, get_orig_profile
+var active_profile = null setget set_active_profile, get_active_profile
 
 func load_orig_profile() -> bool:
 	return load_profile(orig_profile)
@@ -28,7 +28,7 @@ func load_orig_profile() -> bool:
 func load_active_profile() -> bool:
 	return load_profile(active_profile)
 
-func load_profile(profile: ProfileConfig) -> bool:
+func load_profile(profile) -> bool:
 	if ! is_instance_valid(profile):
 		return false
 		
@@ -67,7 +67,7 @@ func load_profiles() -> Array:
 			printerr("%s: not a dictionairy" % path)
 		
 		# Create a new profile object
-		var profile = ProfileConfig.new()
+		var profile = ObservableProfileConfig.new()
 		Util.inflate_ref(profile, parse_res.result)
 		
 		# Save the profile object in the array(profiles) and path to the profile file in the dictionary(saved_profiles)
@@ -79,7 +79,7 @@ func load_profiles() -> Array:
 	return profiles
 
 # Handles the saving of a profile
-func save_profile(profile: ProfileConfig) -> bool:
+func save_profile(profile) -> bool:
 	# get the path of the profile, and create a new Directory var
 	var profile_path = Global.usr_dir_plus("config/profiles")
 	var dir: Directory = Directory.new()
@@ -134,23 +134,23 @@ func save_profiles(profiles: Array) -> bool:
 	return success
 
 # set the orig profile, from start it is always = null, when pressing a saved profile it is equal to the profile name
-func set_orig_profile(new_val: ProfileConfig) -> void:
+func set_orig_profile(new_val) -> void:
 	var new_profile = "null" if new_val == null else new_val.profile_name
 	
 	print("ProfileManager - Setting original profile to: " + new_profile)
 	orig_profile = new_val
 
 # return the orig_profile which is a profileConfig(profile_name, environment ,slot)
-func get_orig_profile() -> ProfileConfig:
+func get_orig_profile():
 	return orig_profile
 
 # set the active profile, always update the profile name when creating a new profile	
-func set_active_profile(new_val: ProfileConfig) -> void:
+func set_active_profile(new_val) -> void:
 	var new_profile = "null" if new_val == null else new_val.profile_name
 	
 	print("ProfileManager - Setting active profile to: " + new_profile)
 	active_profile = new_val
 	
 # return the active_profile which is a profileConfig(profile_name, environment ,slot)	
-func get_active_profile() -> ProfileConfig:
+func get_active_profile():
 	return active_profile

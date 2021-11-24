@@ -33,7 +33,7 @@ func leave_playground() -> void:
 
 	world.clear_world()
 
-func load_world(profile: ProfileConfig) -> void:
+func load_world(profile) -> void:
 	# Get the playground/environment that the car will drive in
 	var env = Global.get_environment(profile.environment)
 	if env == null:

@@ -26,7 +26,7 @@ signal hide_profile_select
 func _init():
 	profile_manager = Global.profile_manager
 
-func hide_profile_select(profile: ProfileConfig) -> void:
+func load_profile(profile) -> void:
 	print("ProfileSelectorViewModel: on_profile_selected called!")
 	
 	# checks if profile selected is valid
@@ -43,6 +43,6 @@ func hide_profile_select(profile: ProfileConfig) -> void:
 	emit_signal("hide_profile_select")
 	
 func get_fresh_profile():
-	return ProfileConfig.new()
+	return ObservableProfileConfig.new()
 	
 	

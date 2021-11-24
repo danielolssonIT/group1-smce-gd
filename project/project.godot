@@ -89,6 +89,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/ui/notification_display/NotificationDisplay.gd"
 }, {
+"base": "Reference",
+"class": "ObservableProfileConfig",
+"language": "GDScript",
+"path": "res://src/models/ObservableProfileConfig.gd"
+}, {
 "base": "IProfileManager",
 "class": "ObservableProfileManager",
 "language": "GDScript",
@@ -97,7 +102,7 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "ProfileConfig",
 "language": "GDScript",
-"path": "res://src/ui/master_control/ProfileConfig.gd"
+"path": "res://src/models/ProfileConfig.gd"
 }, {
 "base": "Reference",
 "class": "ProfileManager",
@@ -138,6 +143,11 @@ _global_script_classes=[ {
 "class": "SecureDigitalStorage",
 "language": "NativeScript",
 "path": "res://src/bind/SecureDigitalStorage.gdns"
+}, {
+"base": "Node",
+"class": "SettingPaneViewModel",
+"language": "GDScript",
+"path": "res://src/ui/hud/SettingPaneViewModel.gd"
 }, {
 "base": "Spatial",
 "class": "Shooty",
@@ -221,6 +231,7 @@ _global_script_class_icons={
 "MasterViewModel": "",
 "NodeVisualizer": "",
 "NotificationDisplay": "",
+"ObservableProfileConfig": "",
 "ObservableProfileManager": "",
 "ProfileConfig": "",
 "ProfileManager": "",
@@ -231,6 +242,7 @@ _global_script_class_icons={
 "RayWheel": "",
 "SMCE": "",
 "SecureDigitalStorage": "",
+"SettingPaneViewModel": "",
 "Shooty": "",
 "ShootyVisualizer": "",
 "SimpleNotification": "",
