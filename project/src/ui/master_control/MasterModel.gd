@@ -4,13 +4,10 @@ extends Node
 
 var profile_manager = Global.profile_manager
 #var sketch_manager = SketchManager.new() 
-#var world = World.new()
 
-var world_t = preload("res://src/ui/master_control/World.tscn")
-var world = null
+onready var world = get_node("/root/Master/World")
 
 func _init():
-	world = world_t.instance()
 	profile_manager.load_profiles()
 
 # Called when the node enters the scene tree for the first time.

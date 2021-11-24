@@ -6,18 +6,16 @@ signal clear_view
 signal show_playground
 signal leave_playground
 
-#var world_t = preload("res://src/ui/master_control/World.tscn")
-#var world = null
-
-#var profile_manager = null
-
-var model = MasterModel.new()
+var model = null
 
 func _init():
+	model = MasterModel.new()
 	model.profile_manager.connect("profile_loaded", self, "_on_profile_loaded")
+	add_child(model)
 
 func _ready():
-	add_child(model.world, true)
+	pass
+	#add_child(model.world, true)
 
 # will enter this at start and every time we press "Reload" 
 # since we technically first unload in order to be able to reload
