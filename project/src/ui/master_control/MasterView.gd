@@ -75,8 +75,7 @@ func reload_profile() -> void:
 	yield(fade_cover(true), "completed")
 	
 	#leave playground in order to load profile again
-	yield(vm.leave_playground(),"completed")
-	vm.load_orig_profile()
+	vm.reload_profile()
 	
 func _on_show_playground() -> void:
 	yield(fade_cover(false), "completed")
