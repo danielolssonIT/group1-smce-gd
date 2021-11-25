@@ -15,7 +15,7 @@
 #  limitations under the License.
 #
 
-class_name SmceHud
+class_name SmceHudView2
 extends Control
 
 var button_t = preload("res://src/ui/hud/SketchButton.tscn")
@@ -45,6 +45,8 @@ var sketch_manager: SketchManager = null
 
 var disabled = false setget set_disabled
 
+var vm = null
+
 # VIEW (added)
 func set_disabled(val: bool = disabled) -> void:
 	disabled = val
@@ -55,17 +57,47 @@ func set_disabled(val: bool = disabled) -> void:
 
 
 func _ready() -> void:
+	print("IN SMCEHUD2VIEW")
 	set_disabled()
 	button_group._init()
 	new_sketch_btn.connect("pressed", self, "_on_sketch_btn")
 	profile_control.connect("toggled", self, "_toggle_profile_control", [false])
 	profile_control_toggle.connect("pressed", self, "_toggle_profile_control", [true])
 	profile_screen_toggle.connect("button_down", self, "_toggle_profile_control", [false])
-	
+
 	sketch_manager = SketchManager.new()
+	
+	vm = SmceHudViewModel2.new(sketch_manager, buttons, paths, button_group) 
+	add_child(vm,true)
+	
+	
+	vm.connect("add_control_to_lpane", self, "_on_add_control_to_lpane")
+	vm.connect("add_button_to_lpane", self , "_on_add_button_to_lpane")
+	vm.connect("reset_numbering", self, "_on_reset_numbering")
+	vm.connect("set_node_visible", self, "_on_set_node_visible")
+	vm.connect("set_buttons_disabled", self, "_on_set_buttons_disabled")
+	vm.connect("add_pane", self, "_on_add_pane")
+	
+func _on_add_pane(pane, slot):
+	_add_pane(pane, slot)
 
+func _on_set_buttons_disabled():
+	set_disabled()
 
-# VIEW(added)
+func _on_set_node_visible(false, node):
+	_set_vis(false, node)
+
+func _on_reset_numbering():
+	_reset_numbering()
+
+func _on_add_control_to_lpane(control):
+	lpane.add_child(control)
+
+func _on_add_button_to_lpane(btn):
+	left_panel.add_child_below_node(attach, btn)
+	attach = btn
+	
+# VIEW
 func _toggle_profile_control(show: bool) -> void:
 	var tween: Tween = TempTween.new()
 	add_child(tween)
@@ -75,7 +107,7 @@ func _toggle_profile_control(show: bool) -> void:
 	
 	tween.start()
 
-# VIEW(added)
+# VIEW
 func _set_vis(visible, node = null) -> void:
 	var tween: Tween = TempTween.new()
 	add_child(tween)
@@ -88,31 +120,14 @@ func _set_vis(visible, node = null) -> void:
 	
 	tween.start()
 
-# VIEWMODEL(added)
+# VIEWMODEL
 func _on_sketch_btn() -> void:
 	get_focus_owner().release_focus()
 	
 	_set_vis(false)
 
-	var sketch_select = sketch_select_t.instance()
-	sketch_select.init(sketch_manager)
-	get_tree().root.add_child(sketch_select)
-	
-	var sketch = yield(sketch_select, "exited")
-	
-	if ! is_instance_valid(sketch):
-		return
-	
-	var pane = _create_sketch_pane(sketch)
-	
-	if pane == null:
-		return
-	
-	var slot = _new_slot()
-	slot[1].grab_focus()
-	slot[1].pressed = true
-	
-	_add_pane(pane, slot)
+	vm.sketch_button_clicked()
+
 
 # VIEWMODEL , MODEL(added)
 func _create_sketch_pane(sketch):
