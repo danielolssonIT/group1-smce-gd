@@ -29,6 +29,7 @@ var profile_manager 		    = ObservableProfileManager.new()
 
 var environments: Dictionary = {
 	"playground/Playground": preload("res://src/environments/playground/Playground.tscn"),
+	"playground/Playground2": preload("res://src/environments/playground/Playground2.tscn"),
 }
 
 var vehicles: Dictionary = {

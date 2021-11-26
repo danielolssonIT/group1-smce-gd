@@ -13,15 +13,17 @@ func _init():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print("IN MASTERMODEL: READY")
-	Signals.connect("save_active_profile", self, "_on_save_active_profile")
-	Signals.connect("update_active_profile_name" , self, "_on_update_active_profile_name")
 	
-func _on_update_active_profile_name(name):
+func set_selected_world(world_name: String) -> void:
+	print("IN MASTERMODEL: set_selected_world")
+	profile_manager.active_profile.environment = world_name
+	
+func update_active_profile_name(name):
 	print("IN _ON_UPDATE_ACTIVE_PROFILE_NAME")	
 	var profile = profile_manager.active_profile
 	profile.profile_name = name
 
-func _on_save_active_profile() -> void:
+func save_active_profile() -> void:
 	if profile_manager.saved_profiles.has(profile_manager.orig_profile):
 		var path: String = profile_manager.saved_profiles[profile_manager.orig_profile]
 		profile_manager.saved_profiles[profile_manager.active_profile] = path
@@ -53,6 +55,9 @@ func load_world(profile):
 
 func load_orig_profile():
 	profile_manager.load_orig_profile()
+
+func load_active_profile():
+	profile_manager.load_active_profile()
 	
 func get_profiles() -> Array:
 	return profile_manager.saved_profiles.keys()

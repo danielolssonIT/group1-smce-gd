@@ -51,16 +51,15 @@ func save_profile() -> void:
 
 func load_world(world_name: String) -> void:
 	print("IN SETTINGPANE: load_world")
-	profile_manager.active_profile.environment = world_name
-	profile_manager.load_profile(profile_manager.active_profile)
-
+	Signals.emit_signal("update_selected_world", world_name)
+	Signals.emit_signal("load_active_profile")
+	
 func _change_profile_name(text: String) -> void:
 	print("IN SETTINGPANE: _change_profile_name")
 	profile_manager.active_profile.profile_name = text
 
 func _on_active_profile_changed(active_profile):
 	_signal_update_save_btn_disabled()
-	
 	
 func _signal_update_save_btn_disabled():
 	if profile_manager.orig_profile.is_equal(profile_manager.active_profile):
