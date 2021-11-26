@@ -36,7 +36,8 @@ func _ready():
 	vm.connect("update_selected_world", self, "_on_update_selected_world")
 	vm.connect("update_save_btn_disabled", self, "_on_update_save_btn_disabled")
 	
-	vm.reflect_profile()
+	#vm.reflect_profile()
+	Signals.emit_signal("read_active_profile")
 	_update_envs()
 
 func _save_profile():

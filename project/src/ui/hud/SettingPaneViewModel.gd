@@ -8,23 +8,17 @@ signal update_sketches_label
 signal update_selected_world
 signal update_save_btn_disabled
 
-var profile_manager = Global.profile_manager
-
 var unique_sketches: int = 0
 var boards: Array = []
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print("IN SETTING_PANE_VIEW_MODEL: READY")
-	profile_manager.connect("profile_loaded", self, "_on_profile_loaded")
-	profile_manager.connect("active_profile_changed", self, "_on_active_profile_changed")
-
-func _on_profile_loaded(profile) -> void:
-	reflect_profile(profile)
+	Signals.connect("profile_loaded", self, "reflect_profile")
+	Signals.connect("active_profile_equals_orig_profile", self, "_signal_update_save_btn_disabled")
+	Signals.connect("broadcast_active_profile", self, "reflect_profile")
 	
-	
-func reflect_profile(profile = profile_manager.active_profile):
+func reflect_profile(profile):
 	if ! is_instance_valid(profile):
 		return
 	
@@ -54,16 +48,6 @@ func load_world(world_name: String) -> void:
 	Signals.emit_signal("update_selected_world", world_name)
 	Signals.emit_signal("load_active_profile")
 	
-func _change_profile_name(text: String) -> void:
-	print("IN SETTINGPANE: _change_profile_name")
-	profile_manager.active_profile.profile_name = text
-
-func _on_active_profile_changed(active_profile):
-	_signal_update_save_btn_disabled()
-	
-func _signal_update_save_btn_disabled():
-	if profile_manager.orig_profile.is_equal(profile_manager.active_profile):
-		emit_signal("update_save_btn_disabled", true)
-	else:
-		emit_signal("update_save_btn_disabled", false)
+func _signal_update_save_btn_disabled(is_disabled):
+	emit_signal("update_save_btn_disabled", is_disabled)
 

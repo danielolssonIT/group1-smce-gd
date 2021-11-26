@@ -10,14 +10,16 @@ var model = null
 
 func _init():
 	model = MasterModel.new()
-	model.profile_manager.connect("profile_loaded", self, "_on_profile_loaded")
+	Signals.connect("profile_loaded", self, "_on_profile_loaded")
 	add_child(model)
+	
 
 func _ready():
 	Signals.connect("save_active_profile", model, "save_active_profile")
-	Signals.connect("update_active_profile_name" , model, "update_active_profile_name")
+	Signals.connect("update_active_profile_name" , model, "set_active_profile_name")
 	Signals.connect("update_selected_world", model, "set_selected_world")
 	Signals.connect("load_active_profile", model, "load_active_profile")
+	
 	
 # will enter this at start and every time we press "Reload" 
 # since we technically first unload in order to be able to reload

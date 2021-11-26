@@ -13,12 +13,22 @@ func _init():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print("IN MASTERMODEL: READY")
+	profile_manager.connect("active_profile_changed", self, "check_active_not_equals_orig")
+	Signals.connect("read_active_profile", self, "broadcast_active_profile")
+	
+func broadcast_active_profile():
+	Signals.emit_signal("broadcast_active_profile", profile_manager.active_profile)
+
+
+func check_active_not_equals_orig():
+	var is_equal =  profile_manager.orig_profile.is_equal(profile_manager.active_profile)
+	Signals.emit_signal("active_profile_equals_orig_profile", is_equal)
 	
 func set_selected_world(world_name: String) -> void:
 	print("IN MASTERMODEL: set_selected_world")
 	profile_manager.active_profile.environment = world_name
 	
-func update_active_profile_name(name):
+func set_active_profile_name(name):
 	print("IN _ON_UPDATE_ACTIVE_PROFILE_NAME")	
 	var profile = profile_manager.active_profile
 	profile.profile_name = name

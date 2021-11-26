@@ -19,9 +19,7 @@ class_name ObservableProfileManager
 extends IProfileManager
 
 # The signals emitted upon a successful call to some of the functions
-signal profile_loaded
 signal profiles_loaded
-signal active_profile_loaded
 signal orig_profile_loaded
 signal profile_saved
 signal profiles_saved
@@ -41,7 +39,7 @@ var _profile_manager = ProfileManager2.new()
 func load_profile(profile) -> void:
 	var success = _profile_manager.load_profile(profile)
 	_profile_manager.active_profile.connect("profile_changed", self, "_on_active_profile_changed")
-	if success: emit_signal("profile_loaded", profile)
+	if success: Signals.emit_signal("profile_loaded", profile)
 	
 func load_profiles() -> Array:
 	var result = _profile_manager.load_profiles()
@@ -53,13 +51,13 @@ func load_active_profile() -> void:
 	var success = _profile_manager.load_active_profile()
 	if success: 
 		emit_signal("active_profile_loaded", _profile_manager.active_profile)
-		emit_signal("profile_loaded", _profile_manager.active_profile)
+		Signals.emit_signal("profile_loaded", _profile_manager.active_profile)
 
 func load_orig_profile() -> void:
 	var success = _profile_manager.load_orig_profile()
 	if success: 
 		emit_signal("orig_profile_loaded", _profile_manager.orig_profile)
-		emit_signal("profile_loaded", _profile_manager.orig_profile)
+		Signals.emit_signal("profile_loaded", _profile_manager.orig_profile)
 	
 func save_profile(profile) -> void:
 	var success = _profile_manager.save_profile(profile)
@@ -80,7 +78,7 @@ func set_active_profile(value):
 		# Connect to the new active profile, to get signaled when its variables change
 		value.connect("profile_changed", self, "_on_active_profile_changed")
 		# Send signal that the active profile has changed (e.g. so the save button gets updated)
-		emit_signal("active_profile_changed", value)
+		Signals.emit_signal("active_profile_changed", value)
 
 func get_orig_profile():
 	return _profile_manager.orig_profile	
@@ -99,7 +97,7 @@ func set_saved_profiles(value):
 
 # SIGNAL HANDLERS
 func _on_active_profile_changed(active_profile) -> void:
-	emit_signal("active_profile_changed", active_profile)
+	Signals.emit_signal("active_profile_changed", active_profile)
 	
 func _on_orig_profile_changed(orig_profile) -> void:
 	emit_signal("orig_profile_changed", orig_profile)
