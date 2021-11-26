@@ -112,6 +112,5 @@ func _on_world_selected(index: int) -> void:
 	profile_manager.active_profile.environment = world_list.get_item_text(index)
 	profile_manager.load_profile(profile_manager.active_profile)
 
-
 func _process(_delta) -> void:
 	save_btn.disabled = profile_manager.active_profile.is_equal(profile_manager.orig_profile)

@@ -29,8 +29,8 @@ onready var attach = $Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control
 onready var new_sketch_btn = $Panel/VBoxContainer/ScrollContainer/VBoxContainer/ToolButton
 onready var notification_display = $Notifications
 
-onready var profile_control = $ProfileControl
-onready var profile_control_toggle = $Panel/VBoxContainer/MarginContainer/VBoxContainer/ProfileControlToggle
+onready var setting_pane = $SettingPane
+onready var setting_pane_toggle = $Panel/VBoxContainer/MarginContainer/VBoxContainer/SettingPaneToggle
 onready var profile_screen_toggle = $ProfileScreentoggle
 
 var button_group: BButtonGroup = BButtonGroup.new()
@@ -57,18 +57,18 @@ func _ready() -> void:
 	set_disabled()
 	button_group._init()
 	new_sketch_btn.connect("pressed", self, "_on_sketch_btn")
-	profile_control.connect("toggled", self, "_toggle_profile_control", [false])
-	profile_control_toggle.connect("pressed", self, "_toggle_profile_control", [true])
-	profile_screen_toggle.connect("button_down", self, "_toggle_profile_control", [false])
+	setting_pane.connect("toggled", self, "_toggle_setting_pane", [false])
+	setting_pane_toggle.connect("pressed", self, "_toggle_setting_pane", [true])
+	profile_screen_toggle.connect("button_down", self, "_toggle_setting_pane", [false])
 	
 	sketch_manager = SketchManager.new()
 
-func _toggle_profile_control(show: bool) -> void:
+func _toggle_setting_pane(show: bool) -> void:
 	var tween: Tween = TempTween.new()
 	add_child(tween)
 	
 	profile_screen_toggle.visible = show
-	tween.interpolate_property(profile_control, "rect_position:x", profile_control.rect_position.x,  -int(!show) * (profile_control.rect_size.x) + int(!show) * -8, 0.25,Tween.TRANS_CUBIC)
+	tween.interpolate_property(setting_pane, "rect_position:x", setting_pane.rect_position.x,  -int(!show) * (setting_pane.rect_size.x) + int(!show) * -8, 0.25,Tween.TRANS_CUBIC)
 	
 	tween.start()
 

@@ -16,7 +16,7 @@
 #
 class_name ProfileSelectorViewModel
 
-extends Node
+extends NamedNode
 
 var profile_manager = null
 

@@ -108,7 +108,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ProfileControlToggle" type="ToolButton" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="SettingPaneToggle" type="ToolButton" parent="Panel/VBoxContainer/MarginContainer/VBoxContainer"]
 margin_right = 48.0
 margin_bottom = 41.0
 rect_min_size = Vector2( 0, 41 )
@@ -161,7 +161,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ProfileControl" parent="." instance=ExtResource( 5 )]
+[node name="SettingPane" parent="." instance=ExtResource( 5 )]
 margin_left = -320.0
 margin_right = -16.0
 

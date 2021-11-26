@@ -24,6 +24,7 @@ var vm = null
 
 func _ready() -> void:
 	vm = MasterViewModel.new() #MasterViewModel variable created
+	vm.name = "MasterViewModel"
 	add_child(vm, true)
 	
 	profile_select.play_show_buttons_animation(vm.get_profiles())
