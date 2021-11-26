@@ -1,6 +1,6 @@
 class_name SettingPaneViewModel
 
-extends NamedNode
+extends Node
 
 signal profile_name_changed
 signal update_boards_label
@@ -16,6 +16,7 @@ var boards: Array = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	print("IN SETTING_PANE_VIEW_MODEL: READY")
 	profile_manager.connect("profile_loaded", self, "_on_profile_loaded")
 	profile_manager.connect("active_profile_changed", self, "_on_active_profile_changed")
 
@@ -43,18 +44,10 @@ func reflect_profile(profile = profile_manager.active_profile):
 	emit_signal("update_selected_world", world_index)
 	
 func update_active_profile_name(name: String) -> void:
-	var profile = profile_manager.active_profile
-	profile.profile_name = name
+	Signals.emit_signal("update_active_profile_name", name)
 
 func save_profile() -> void:
-	if profile_manager.saved_profiles.has(profile_manager.orig_profile):
-		var path: String = profile_manager.saved_profiles[profile_manager.orig_profile]
-		profile_manager.saved_profiles[profile_manager.active_profile] = path
-		profile_manager.saved_profiles.erase(profile_manager.orig_profile)
-
-	profile_manager.save_profile(profile_manager.active_profile)
-	profile_manager.orig_profile = profile_manager.active_profile
-	profile_manager.active_profile = Util.duplicate_ref(profile_manager.active_profile)
+	Signals.emit_signal("save_active_profile")
 
 func load_world(world_name: String) -> void:
 	print("IN SETTINGPANE: load_world")

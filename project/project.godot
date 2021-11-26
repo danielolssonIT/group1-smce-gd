@@ -79,15 +79,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/ui/master_control/MasterModel.gd"
 }, {
-"base": "NamedNode",
+"base": "Node",
 "class": "MasterViewModel",
 "language": "GDScript",
 "path": "res://src/ui/master_control/MasterViewModel.gd"
-}, {
-"base": "Node",
-"class": "NamedNode",
-"language": "GDScript",
-"path": "res://src/utilities/NamedNode.gd"
 }, {
 "base": "Label",
 "class": "NodeVisualizer",
@@ -129,7 +124,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/ui/profile_selector/ProfileSelectorView.gd"
 }, {
-"base": "NamedNode",
+"base": "Node",
 "class": "ProfileSelectorViewModel",
 "language": "GDScript",
 "path": "res://src/ui/profile_selector/ProfileSelectorViewModel.gd"
@@ -154,7 +149,7 @@ _global_script_classes=[ {
 "language": "NativeScript",
 "path": "res://src/bind/SecureDigitalStorage.gdns"
 }, {
-"base": "NamedNode",
+"base": "Node",
 "class": "SettingPaneViewModel",
 "language": "GDScript",
 "path": "res://src/ui/hud/SettingPaneViewModel.gd"
@@ -189,7 +184,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/ui/hud/SmceHud.gd"
 }, {
-"base": "NamedNode",
+"base": "Node",
 "class": "SmceHudViewModel",
 "language": "GDScript",
 "path": "res://src/ui/hud/SmceHudViewModel.gd"
@@ -240,7 +235,6 @@ _global_script_class_icons={
 "IProfileManager": "",
 "MasterModel": "",
 "MasterViewModel": "",
-"NamedNode": "",
 "NodeVisualizer": "",
 "NotificationDisplay": "",
 "ObservableProfileConfig": "",
@@ -289,6 +283,7 @@ DebugCanvas="*res://src/utilities/debug_canvas/DebugCanvas.gd"
 FocusOwner="*res://src/utilities/focus_owner/FocusOwner.gd"
 Global="*res://Global.gd"
 ModManager="*res://src/ui/master_control/ModManager.gd"
+Signals="*res://src/utilities/Signals.gd"
 
 [debug]
 

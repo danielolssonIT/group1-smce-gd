@@ -1,4 +1,4 @@
-extends NamedNode
+extends Node
 
 class_name SmceHudViewModel
 

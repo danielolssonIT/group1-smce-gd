@@ -12,7 +12,25 @@ func _init():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	print("IN MASTERMODEL: READY")
+	Signals.connect("save_active_profile", self, "_on_save_active_profile")
+	Signals.connect("update_active_profile_name" , self, "_on_update_active_profile_name")
+	
+func _on_update_active_profile_name(name):
+	print("IN _ON_UPDATE_ACTIVE_PROFILE_NAME")	
+	var profile = profile_manager.active_profile
+	profile.profile_name = name
+
+func _on_save_active_profile() -> void:
+	if profile_manager.saved_profiles.has(profile_manager.orig_profile):
+		var path: String = profile_manager.saved_profiles[profile_manager.orig_profile]
+		profile_manager.saved_profiles[profile_manager.active_profile] = path
+		profile_manager.saved_profiles.erase(profile_manager.orig_profile)
+
+	profile_manager.save_profile(profile_manager.active_profile)
+	profile_manager.orig_profile = profile_manager.active_profile
+	print("IN MASTERMODEL: _save_profile")
+	profile_manager.active_profile = Util.duplicate_ref(profile_manager.active_profile)	
 
 func clear_world():
 	world.clear_world()
@@ -38,3 +56,4 @@ func load_orig_profile():
 	
 func get_profiles() -> Array:
 	return profile_manager.saved_profiles.keys()
+
