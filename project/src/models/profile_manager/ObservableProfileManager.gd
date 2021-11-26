@@ -78,7 +78,7 @@ func set_active_profile(value):
 		# Connect to the new active profile, to get signaled when its variables change
 		value.connect("profile_changed", self, "_on_active_profile_changed")
 		# Send signal that the active profile has changed (e.g. so the save button gets updated)
-		Signals.emit_signal("active_profile_changed", value)
+		emit_signal("active_profile_changed", value)
 
 func get_orig_profile():
 	return _profile_manager.orig_profile	
@@ -97,7 +97,7 @@ func set_saved_profiles(value):
 
 # SIGNAL HANDLERS
 func _on_active_profile_changed(active_profile) -> void:
-	Signals.emit_signal("active_profile_changed", active_profile)
+	emit_signal("active_profile_changed", active_profile)
 	
 func _on_orig_profile_changed(orig_profile) -> void:
 	emit_signal("orig_profile_changed", orig_profile)

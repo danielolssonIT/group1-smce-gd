@@ -98,6 +98,6 @@ func _on_update_selected_world(world_index: int) -> void:
 func _on_update_save_btn_disabled(disabled: bool) -> void:
 	_set_save_btn_disabled(disabled)
 	
-func _process(_delta) -> void:
-	save_btn.disabled = vm.profile_manager.active_profile.is_equal(vm.profile_manager.orig_profile)
+#func _process(_delta) -> void:
+#	save_btn.disabled = vm.profile_manager.active_profile.is_equal(vm.profile_manager.orig_profile)
 
