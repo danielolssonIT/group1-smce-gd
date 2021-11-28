@@ -30,8 +30,9 @@ func set_selected_world(world_name: String) -> void:
 	
 func set_active_profile_name(name):
 	print("IN _ON_UPDATE_ACTIVE_PROFILE_NAME")	
-	var profile = profile_manager.active_profile
-	profile.profile_name = name
+	#var profile = profile_manager.active_profile
+	#profile.profile_name = name
+	profile_manager.active_profile.profile_name = name
 
 func save_active_profile() -> void:
 	if profile_manager.saved_profiles.has(profile_manager.orig_profile):
