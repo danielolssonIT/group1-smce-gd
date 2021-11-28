@@ -31,6 +31,7 @@ func _ready() -> void:
 
 	vm.connect("show_playground", self, "_on_show_playground")
 	vm.connect("leave_playground", self, "_on_leave_playground")
+	vm.connect("reload_profile", self, "reload_profile")
 	
 # handles inputEvents
 func _input(event: InputEvent):

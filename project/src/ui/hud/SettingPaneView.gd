@@ -48,11 +48,11 @@ func _update_envs():
 		world_list.add_item(env)
 
 func _switch_profile() -> void:
-	get_node("/root/Master").show_profile_select()
+	Signals.emit_signal("show_profile_select")
 
 
 func _reload_profile() -> void:
-	get_node("/root/Master").reload_profile()
+	Signals.emit_signal("reload_profile")
 	
 func _change_profile_name(text: String):
 	vm.update_active_profile_name(text)

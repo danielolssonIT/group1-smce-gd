@@ -31,7 +31,6 @@ func _ready() -> void:
 	
 	add_child(vm, true)
 	
-	#line under needed for the "start fresh" button 
 	fresh_btn.connect("pressed", self, "_on_profile_pressed", [vm.get_fresh_profile()])
 	vm.connect("hide_buttons", self, "_on_hide_buttons")
 	vm.connect("hide_profile_select", self, "_on_hide_profile_select")
@@ -42,7 +41,7 @@ func display_profiles(arr: Array) -> void:
 	for child in attach.get_children():
 		if child != fresh_btn:
 			child.queue_free()
-	# add profile button for each profile
+	# add profile button for each saved profile
 	for profile in arr:
 		var btn = profile_button_t.instance()
 		attach.add_child(btn)
