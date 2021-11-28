@@ -18,8 +18,6 @@ class_name ProfileSelectorViewModel
 
 extends Node
 
-var profile_manager = null
-
 signal hide_buttons
 signal hide_profile_select
 

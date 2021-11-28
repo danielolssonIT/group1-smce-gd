@@ -2,7 +2,7 @@ class_name MasterModel
 
 extends Node
 
-var profile_manager = Global.profile_manager
+var profile_manager = ObservableProfileManager.new()
 #var sketch_manager = SketchManager.new() 
 
 onready var world = get_node("/root/Master/World")

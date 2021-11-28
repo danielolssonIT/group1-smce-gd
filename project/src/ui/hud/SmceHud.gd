@@ -184,7 +184,6 @@ func _add_pane(pane: Control, slot):
 	_set_vis(slot[1].pressed, slot[0])
 	
 	profile.slots = slots()
-	#Global.profile_manager.active_profile.slots = slots()
 
 
 func _remove_pane(node, button) -> void:
