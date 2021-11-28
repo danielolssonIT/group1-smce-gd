@@ -1,11 +1,8 @@
 extends Node
 
-class_name SmceHudModel
+class_name SketchesModel
 
 var control_pane_t = preload("res://src/ui/sketch_control/ControlPane.tscn")
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 
 var sketch_manager: SketchManager = null
 
@@ -28,7 +25,3 @@ func _create_sketch_pane(sketch):
 		return null
 	
 	return pane
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass

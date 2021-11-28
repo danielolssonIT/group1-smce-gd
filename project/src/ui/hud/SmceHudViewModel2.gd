@@ -15,15 +15,11 @@ var sketch_select_t = preload("res://src/ui/sketch_select/SketchSelect.tscn")
 var control_pane_t = preload("res://src/ui/sketch_control/ControlPane.tscn")
 var button_t = preload("res://src/ui/hud/SketchButton.tscn")
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
 var sketch_manager = null
 var buttons: Array = []
 var paths: Dictionary = {}
 var button_group: BButtonGroup = BButtonGroup.new()
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.

@@ -43,12 +43,12 @@ var cam_ctl: CamCtl = null
 var profile = null
 var sketch_manager: SketchManager = null
 
-var disabled = false setget set_disabled
+var disabled = false setget set_all_buttons_disabled
 
 var vm = null
 
 # VIEW (added)
-func set_disabled(val: bool = disabled) -> void:
+func set_all_buttons_disabled(val: bool = disabled) -> void:
 	disabled = val
 	for btn in buttons:
 		btn.disabled = val
@@ -58,7 +58,7 @@ func set_disabled(val: bool = disabled) -> void:
 
 func _ready() -> void:
 	print("IN SMCEHUD2VIEW")
-	set_disabled()
+	set_all_buttons_disabled()
 	button_group._init()
 	new_sketch_btn.connect("pressed", self, "_on_sketch_btn")
 	setting_pane.connect("toggled", self, "_toggle_setting_pane", [false])
@@ -67,6 +67,7 @@ func _ready() -> void:
 
 	sketch_manager = SketchManager.new()
 	
+	# Fix this constructor so that it takes zero arguments
 	vm = SmceHudViewModel2.new(sketch_manager, buttons, paths, button_group) 
 	add_child(vm,true)
 	
@@ -84,7 +85,7 @@ func _on_add_pane(pane, slot):
 	_add_pane(pane, slot)
 
 func _on_set_buttons_disabled():
-	set_disabled()
+	set_all_buttons_disabled()
 
 func _on_set_node_visible(is_visible, node):
 	_set_vis(is_visible, node)
@@ -125,7 +126,7 @@ func _set_vis(visible, node = null) -> void:
 	
 	tween.start()
 
-# VIEWMODEL
+
 func _on_sketch_btn() -> void:
 	vm.sketch_button_clicked()
 
@@ -187,7 +188,7 @@ func _new_slot():
 	_reset_numbering()
 	
 	_set_vis(false, wrap) 
-	set_disabled() 
+	set_all_buttons_disabled() 
 	return [wrap, activate_btn]
 
 #VIEW
@@ -256,25 +257,25 @@ func slots() -> Array:
 
 # VIEW & VIEWMODEL
 func add_slots(slots: Array) -> void:
-	set_disabled(true)
+	set_all_buttons_disabled(true)
 	slots.sort_custom(Slot, "comp")
-	
+
 	for slot in slots:
-		
+
 		var sketch = sketch_manager.get_sketch(slot.path)
-		
+
 		if sketch == null:
 			var res = sketch_manager.make_sketch(slot.path)
 			if ! res.ok():
 				printerr("Failed to setup slot: %s" % res.error())
 				continue
 			sketch = sketch_manager.get_sketch(slot.path)
-		
+
 		var pane = _create_sketch_pane(sketch_manager.get_sketch(slot.path))
 		if pane == null:
 			continue
 		_add_pane(pane, _new_slot())
-		
-	
-	set_disabled(false)
+
+
+	set_all_buttons_disabled(false)
 
