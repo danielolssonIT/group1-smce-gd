@@ -15,6 +15,7 @@ func _ready():
 	print("IN MASTERMODEL: READY")
 	profile_manager.connect("active_profile_changed", self, "assert_active_not_equals_orig")
 	Signals.connect("read_active_profile", self, "broadcast_active_profile")
+	Signals.connect("load_profile", profile_manager, "load_profile")
 	
 func broadcast_active_profile():
 	Signals.emit_signal("broadcast_active_profile", profile_manager.active_profile)

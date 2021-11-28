@@ -13,3 +13,4 @@ signal profile_loaded
 signal active_profile_equals_orig_profile
 signal read_active_profile
 signal broadcast_active_profile
+signal load_profile
