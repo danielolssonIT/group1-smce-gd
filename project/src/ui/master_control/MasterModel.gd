@@ -2,7 +2,7 @@ class_name MasterModel
 
 extends Node
 
-var profile_manager = Global.profile_manager
+var profile_manager = ObservableProfileManager.new()
 #var sketch_manager = SketchManager.new() 
 
 onready var world = get_node("/root/Master/World")
@@ -12,7 +12,39 @@ func _init():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	print("IN MASTERMODEL: READY")
+	profile_manager.connect("active_profile_changed", self, "assert_active_not_equals_orig")
+	Signals.connect("read_active_profile", self, "broadcast_active_profile")
+	Signals.connect("load_profile", profile_manager, "load_profile")
+	
+func broadcast_active_profile():
+	Signals.emit_signal("broadcast_active_profile", profile_manager.active_profile)
+
+
+func assert_active_not_equals_orig(active_profile = null):
+	var is_equal = profile_manager.orig_profile.is_equal(profile_manager.active_profile)
+	Signals.emit_signal("active_profile_equals_orig_profile", is_equal)
+	
+func set_selected_world(world_name: String) -> void:
+	print("IN MASTERMODEL: set_selected_world")
+	profile_manager.active_profile.environment = world_name
+	
+func set_active_profile_name(name):
+	print("IN _ON_UPDATE_ACTIVE_PROFILE_NAME")	
+	#var profile = profile_manager.active_profile
+	#profile.profile_name = name
+	profile_manager.active_profile.profile_name = name
+
+func save_active_profile() -> void:
+	if profile_manager.saved_profiles.has(profile_manager.orig_profile):
+		var path: String = profile_manager.saved_profiles[profile_manager.orig_profile]
+		profile_manager.saved_profiles[profile_manager.active_profile] = path
+		profile_manager.saved_profiles.erase(profile_manager.orig_profile)
+
+	profile_manager.save_profile(profile_manager.active_profile)
+	profile_manager.orig_profile = profile_manager.active_profile
+	print("IN MASTERMODEL: _save_profile")
+	profile_manager.active_profile = Util.duplicate_ref(profile_manager.active_profile)	
 
 func clear_world():
 	world.clear_world()
@@ -35,6 +67,10 @@ func load_world(profile):
 
 func load_orig_profile():
 	profile_manager.load_orig_profile()
+
+func load_active_profile():
+	profile_manager.load_active_profile()
 	
 func get_profiles() -> Array:
 	return profile_manager.saved_profiles.keys()
+

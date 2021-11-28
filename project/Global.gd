@@ -20,15 +20,11 @@ extends Node
 onready var debug_canvas 	= DebugCanvas
 onready var focus_owner 		= FocusOwner
 onready var mod_manager		= ModManager
-var profile_manager 		    = ObservableProfileManager.new()
-
-
-#func _init() -> void:
-	#profile_manager = ProfileManager.new()
 
 
 var environments: Dictionary = {
 	"playground/Playground": preload("res://src/environments/playground/Playground.tscn"),
+	"playground/Playground2": preload("res://src/environments/playground/Playground2.tscn"),
 }
 
 var vehicles: Dictionary = {

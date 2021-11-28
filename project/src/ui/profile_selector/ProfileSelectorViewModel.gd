@@ -18,13 +18,8 @@ class_name ProfileSelectorViewModel
 
 extends Node
 
-var profile_manager = null
-
 signal hide_buttons
 signal hide_profile_select
-
-func _init():
-	profile_manager = Global.profile_manager
 
 func load_profile(profile) -> void:
 	print("ProfileSelectorViewModel: on_profile_selected called!")
@@ -38,7 +33,7 @@ func load_profile(profile) -> void:
 	
 	# Wait for 0.35 seconds before loading the profile 
 	yield(get_tree().create_timer(0.35), "timeout")
-	profile_manager.load_profile(profile)
+	Signals.emit_signal("load_profile", profile)
 	
 	emit_signal("hide_profile_select")
 	

@@ -301,6 +301,7 @@ DebugCanvas="*res://src/utilities/debug_canvas/DebugCanvas.gd"
 FocusOwner="*res://src/utilities/focus_owner/FocusOwner.gd"
 Global="*res://Global.gd"
 ModManager="*res://src/ui/master_control/ModManager.gd"
+Signals="*res://src/utilities/Signals.gd"
 
 [debug]
 

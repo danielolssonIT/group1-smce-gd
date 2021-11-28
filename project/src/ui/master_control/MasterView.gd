@@ -24,12 +24,14 @@ var vm = null
 
 func _ready() -> void:
 	vm = MasterViewModel.new() #MasterViewModel variable created
+	vm.name = "MasterViewModel"
 	add_child(vm, true)
 	
 	profile_select.play_show_buttons_animation(vm.get_profiles())
 
 	vm.connect("show_playground", self, "_on_show_playground")
 	vm.connect("leave_playground", self, "_on_leave_playground")
+	vm.connect("reload_profile", self, "reload_profile")
 	
 # handles inputEvents
 func _input(event: InputEvent):

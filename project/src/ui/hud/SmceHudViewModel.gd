@@ -7,19 +7,9 @@ class_name SmceHudViewModel
 signal update_hud
 #signal show_left_pane
 
-var profile_manager = Global.profile_manager
-
-#var model = SmceHudModel.new()
-#
-#var control = Control.new()
-
-
-#func _ready():
-#	model.sketch_manager = SketchManager.new()
-
 # Called when the node enters the scene tree for the first time.
 func _init():
-	profile_manager.connect("profile_loaded", self, "_on_profile_loaded")
+	Signals.connect("profile_loaded", self, "_on_profile_loaded")
 
 
 
