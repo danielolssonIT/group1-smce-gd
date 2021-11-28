@@ -20,6 +20,7 @@ extends IProfileManager
 
 # The signals emitted upon a successful call to some of the functions
 signal profiles_loaded
+signal active_profile_loaded
 signal orig_profile_loaded
 signal profile_saved
 signal profiles_saved

@@ -29,8 +29,8 @@ onready var attach = $Panel/VBoxContainer/ScrollContainer/VBoxContainer/Control
 onready var new_sketch_btn = $Panel/VBoxContainer/ScrollContainer/VBoxContainer/ToolButton
 onready var notification_display = $Notifications
 
-onready var profile_control = $ProfileControl
-onready var profile_control_toggle = $Panel/VBoxContainer/MarginContainer/VBoxContainer/ProfileControlToggle
+onready var setting_pane = $SettingPane
+onready var setting_pane_toggle = $Panel/VBoxContainer/MarginContainer/VBoxContainer/SettingPaneToggle
 onready var profile_screen_toggle = $ProfileScreentoggle
 
 var button_group: BButtonGroup = BButtonGroup.new()
@@ -61,9 +61,9 @@ func _ready() -> void:
 	set_disabled()
 	button_group._init()
 	new_sketch_btn.connect("pressed", self, "_on_sketch_btn")
-	profile_control.connect("toggled", self, "_toggle_profile_control", [false])
-	profile_control_toggle.connect("pressed", self, "_toggle_profile_control", [true])
-	profile_screen_toggle.connect("button_down", self, "_toggle_profile_control", [false])
+	setting_pane.connect("toggled", self, "_toggle_setting_pane", [false])
+	setting_pane_toggle.connect("pressed", self, "_toggle_setting_pane", [true])
+	profile_screen_toggle.connect("button_down", self, "_toggle_setting_pane", [false])
 
 	sketch_manager = SketchManager.new()
 	
@@ -77,6 +77,8 @@ func _ready() -> void:
 	vm.connect("set_node_visible", self, "_on_set_node_visible")
 	vm.connect("set_buttons_disabled", self, "_on_set_buttons_disabled")
 	vm.connect("add_pane", self, "_on_add_pane")
+	vm.connect("release_focus", self, "_on_release_focus_from_owner")
+	vm.connect("hide_lpane", self, "_on_hide_lpane")
 	
 func _on_add_pane(pane, slot):
 	_add_pane(pane, slot)
@@ -84,8 +86,8 @@ func _on_add_pane(pane, slot):
 func _on_set_buttons_disabled():
 	set_disabled()
 
-func _on_set_node_visible(false, node):
-	_set_vis(false, node)
+func _on_set_node_visible(is_visible, node):
+	_set_vis(is_visible, node)
 
 func _on_reset_numbering():
 	_reset_numbering()
@@ -97,13 +99,16 @@ func _on_add_button_to_lpane(btn):
 	left_panel.add_child_below_node(attach, btn)
 	attach = btn
 	
+func _on_hide_lpane():
+	_set_vis(false)
+
 # VIEW
-func _toggle_profile_control(show: bool) -> void:
+func _toggle_setting_pane(show: bool) -> void:
 	var tween: Tween = TempTween.new()
 	add_child(tween)
 	
 	profile_screen_toggle.visible = show
-	tween.interpolate_property(profile_control, "rect_position:x", profile_control.rect_position.x,  -int(!show) * (profile_control.rect_size.x) + int(!show) * -8, 0.25,Tween.TRANS_CUBIC)
+	tween.interpolate_property(setting_pane, "rect_position:x", setting_pane.rect_position.x,  -int(!show) * (setting_pane.rect_size.x) + int(!show) * -8, 0.25,Tween.TRANS_CUBIC)
 	
 	tween.start()
 
@@ -122,12 +127,10 @@ func _set_vis(visible, node = null) -> void:
 
 # VIEWMODEL
 func _on_sketch_btn() -> void:
-	get_focus_owner().release_focus()
-	
-	_set_vis(false)
-
 	vm.sketch_button_clicked()
 
+func _on_release_focus_from_owner():
+	get_focus_owner().release_focus()
 
 # VIEWMODEL , MODEL(added)
 func _create_sketch_pane(sketch):

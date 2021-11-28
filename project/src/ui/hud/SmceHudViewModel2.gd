@@ -8,7 +8,8 @@ signal reset_numbering
 signal set_node_visible
 signal set_buttons_disabled
 signal add_pane
-
+signal release_focus
+signal hide_lpane
 
 var sketch_select_t = preload("res://src/ui/sketch_select/SketchSelect.tscn")
 var control_pane_t = preload("res://src/ui/sketch_control/ControlPane.tscn")
@@ -39,6 +40,9 @@ func _init(sketch_manager, buttons, paths, button_group):
 	
 
 func sketch_button_clicked() -> void:
+	emit_signal("release_focus")
+	emit_signal("hide_lpane")
+	
 	var sketch_select = sketch_select_t.instance()
 	sketch_select.init(sketch_manager)
 	get_tree().root.add_child(sketch_select)
