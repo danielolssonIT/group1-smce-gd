@@ -19,9 +19,14 @@ extends Node
 
 onready var profile_select = $ProfileSelect
 onready var screen_cover = $ScreenCover
+onready var hud_attach = $HUD
 
 var vm = null
 
+var hud_t = preload("res://src/ui/hud/SmceHud.tscn")
+var hud = null
+
+	
 func _ready() -> void:
 	vm = MasterViewModel.new() #MasterViewModel variable created
 	vm.name = "MasterViewModel"
@@ -32,6 +37,7 @@ func _ready() -> void:
 	vm.connect("show_playground", self, "_on_show_playground")
 	vm.connect("leave_playground", self, "_on_leave_playground")
 	vm.connect("reload_profile", self, "reload_profile")
+	vm.connect("update_hud", self, "_on_update_hud")
 	
 # handles inputEvents
 func _input(event: InputEvent):
@@ -85,3 +91,16 @@ func _on_show_playground() -> void:
 func _on_leave_playground() -> void:
 	show_profile_select()
 	
+func _on_update_hud(profile, slots) -> void:
+	print("IN SMCE_HUD_VIEW : ON_UPDATE_HUD")
+	if hud != null:
+		print("in QUEUE_FREE HUD")
+		hud.queue_free() # Remove from the scene tree so the old HUD instance doesn't show
+	
+	hud = hud_t.instance() # Make a new HUD since we removed the old one
+	
+	hud.cam_ctl = get_node("/root/Master/World").cam_ctl
+	
+	hud_attach.add_child(hud)
+	hud.profile   = profile
+	hud.add_slots(slots)

@@ -55,23 +55,13 @@ func set_all_buttons_disabled(val: bool = disabled) -> void:
 	if is_instance_valid(new_sketch_btn):
 		new_sketch_btn.disabled = val
 
-
-func _ready() -> void:
-	print("IN SMCEHUD2VIEW")
-	set_all_buttons_disabled()
-	button_group._init()
+func init_signals():
 	new_sketch_btn.connect("pressed", self, "_on_sketch_btn")
 	setting_pane.connect("toggled", self, "_toggle_setting_pane", [false])
 	setting_pane_toggle.connect("pressed", self, "_toggle_setting_pane", [true])
-	profile_screen_toggle.connect("button_down", self, "_toggle_setting_pane", [false])
-
-	sketch_manager = SketchManager.new()
+	profile_screen_toggle.connect("button_down", self, "_toggle_setting_pane", [false])	
 	
-	# Fix this constructor so that it takes zero arguments
-	vm = SmceHudViewModel2.new(sketch_manager, buttons, paths, button_group) 
-	add_child(vm,true)
-	
-	
+	# emit signals from ViewModel
 	vm.connect("add_control_to_lpane", self, "_on_add_control_to_lpane")
 	vm.connect("add_button_to_lpane", self , "_on_add_button_to_lpane")
 	vm.connect("reset_numbering", self, "_on_reset_numbering")
@@ -80,6 +70,49 @@ func _ready() -> void:
 	vm.connect("add_pane", self, "_on_add_pane")
 	vm.connect("release_focus", self, "_on_release_focus_from_owner")
 	vm.connect("hide_lpane", self, "_on_hide_lpane")
+
+
+func init_variables():
+	set_all_buttons_disabled()
+	button_group._init()
+
+	sketch_manager = SketchManager.new()
+	
+	# Fix this constructor so that it takes zero arguments
+	vm = SmceHudViewModel2.new(sketch_manager, buttons, paths, button_group) 
+	add_child(vm,true)
+
+func _ready() -> void:
+	print("IN SMCEHUD2VIEW")
+	init_variables()
+	init_signals()
+#	set_all_buttons_disabled()
+#	button_group._init()
+#	new_sketch_btn.connect("pressed", self, "_on_sketch_btn")
+#	setting_pane.connect("toggled", self, "_toggle_setting_pane", [false])
+#	setting_pane_toggle.connect("pressed", self, "_toggle_setting_pane", [true])
+#	profile_screen_toggle.connect("button_down", self, "_toggle_setting_pane", [false])
+#
+##	sketch_manager = SketchManager.new()
+#
+##	# Fix this constructor so that it takes zero arguments
+##	vm = SmceHudViewModel2.new(sketch_manager, buttons, paths, button_group) 
+##	add_child(vm,true)
+#
+#
+#	vm.connect("add_control_to_lpane", self, "_on_add_control_to_lpane")
+#	vm.connect("add_button_to_lpane", self , "_on_add_button_to_lpane")
+#	vm.connect("reset_numbering", self, "_on_reset_numbering")
+#	vm.connect("set_node_visible", self, "_on_set_node_visible")
+#	vm.connect("set_buttons_disabled", self, "_on_set_buttons_disabled")
+#	vm.connect("add_pane", self, "_on_add_pane")
+#	vm.connect("release_focus", self, "_on_release_focus_from_owner")
+#	vm.connect("hide_lpane", self, "_on_hide_lpane")
+
+func reload():
+	init_variables()
+	init_signals()
+
 	
 func _on_add_pane(pane, slot):
 	_add_pane(pane, slot)

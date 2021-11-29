@@ -6,6 +6,7 @@ signal clear_view
 signal show_playground
 signal leave_playground
 signal reload_profile
+signal update_hud
 
 var model = null
 
@@ -21,6 +22,8 @@ func _ready():
 	Signals.connect("load_active_profile", model, "load_active_profile")
 	Signals.connect("show_profile_select", self, "emit_signal", ["leave_playground"])
 	Signals.connect("reload_profile", self, "emit_signal", ["reload_profile"])
+	
+	Signals.connect("profile_loaded", self, "_on_profile_loaded")
 	
 # will enter this at start and every time we press "Reload" 
 # since we technically first unload in order to be able to reload
@@ -44,3 +47,4 @@ func get_profiles() -> Array:
 func _on_profile_loaded(profile):
 	model.load_world(profile)
 	emit_signal("show_playground")
+	emit_signal("update_hud", profile, profile.slots)
