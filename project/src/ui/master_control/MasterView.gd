@@ -43,7 +43,7 @@ func set_channel(_channel):
 	channel = _channel
 	
 	for child in [vm, profile_select, hud]:
-		child.set_channel(_channel)
+		child.channel = _channel
 	
 # handles inputEvents
 func _input(event: InputEvent):

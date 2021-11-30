@@ -23,7 +23,7 @@ func set_channel(_channel):
 	channel.connect("load_profile", profile_manager, "load_profile")
 	
 	for child in [profile_manager]:
-		child.set_channel(_channel)
+		child.channel = _channel
 	
 func broadcast_active_profile():
 	channel.emit_signal("broadcast_active_profile", profile_manager.active_profile)

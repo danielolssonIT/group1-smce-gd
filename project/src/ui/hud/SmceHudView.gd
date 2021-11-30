@@ -17,7 +17,7 @@ func set_channel(_channel):
 	channel = _channel
 	
 	for child in [vm]:
-		child.set_channel(_channel)
+		child.channel = _channel
 		
 func _on_update_hud(profile, slots) -> void:
 	print("IN SMCE_HUD_VIEW : ON_UPDATE_HUD")

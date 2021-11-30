@@ -49,7 +49,7 @@ func set_channel(_channel):
 	channel = _channel
 	
 	for child in [vm]:
-		child.set_channel(_channel)
+		child.channel = _channel
 		
 	yield(get_tree(), "idle_frame")
 	channel.emit_signal("read_active_profile")

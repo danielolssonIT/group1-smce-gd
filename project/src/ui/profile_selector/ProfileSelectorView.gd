@@ -42,7 +42,7 @@ func set_channel(_channel):
 	channel = _channel
 	
 	for child in [vm]:
-		child.set_channel(_channel)
+		child.channel = _channel
 
 # displays saved profiles horizontally on the start page
 func display_profiles(arr: Array) -> void:

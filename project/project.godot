@@ -164,16 +164,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/attachments/ShootyVisualizer.gd"
 }, {
-"base": "Control",
-"class": "SignalerControl",
-"language": "GDScript",
-"path": "res://src/utilities/SignalerControl.gd"
-}, {
-"base": "Node",
-"class": "SignalerNode",
-"language": "GDScript",
-"path": "res://src/utilities/SignalerNode.gd"
-}, {
 "base": "Button",
 "class": "SimpleNotification",
 "language": "GDScript",
@@ -261,8 +251,6 @@ _global_script_class_icons={
 "SettingPaneViewModel": "",
 "Shooty": "",
 "ShootyVisualizer": "",
-"SignalerControl": "",
-"SignalerNode": "",
 "SimpleNotification": "",
 "Sketch": "",
 "SketchManager": "",

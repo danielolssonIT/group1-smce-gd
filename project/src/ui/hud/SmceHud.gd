@@ -70,7 +70,7 @@ func set_channel(_channel):
 	channel = _channel
 	
 	for child in [setting_pane]:
-		child.set_channel(_channel)
+		child.channel = _channel
 
 func _toggle_setting_pane(show: bool) -> void:
 	var tween: Tween = TempTween.new()

@@ -28,7 +28,7 @@ func set_channel(_channel):
 	channel.connect("reload_profile", self, "emit_signal", ["reload_profile"])
 	
 	for child in [model]:
-		child.set_channel(_channel)
+		child.channel = _channel
 
 # will enter this at start and every time we press "Reload" 
 # since we technically first unload in order to be able to reload
