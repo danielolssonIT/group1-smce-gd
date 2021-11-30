@@ -36,7 +36,7 @@ func load_profile(profile) -> void:
 	
 	# Wait for 0.35 seconds before loading the profile 
 	yield(get_tree().create_timer(0.35), "timeout")
-	Signals.emit_signal("load_profile", profile)
+	channel.emit_signal("load_profile", profile)
 	
 	emit_signal("hide_profile_select")
 	

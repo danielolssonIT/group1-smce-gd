@@ -42,7 +42,7 @@ func _ready():
 	vm.connect("update_save_btn_disabled", self, "_on_update_save_btn_disabled")
 	
 	#vm.reflect_profile()
-	Signals.emit_signal("read_active_profile")
+	channel.emit_signal("read_active_profile")
 	_update_envs()
 
 func get_child_signalers():
@@ -57,11 +57,11 @@ func _update_envs():
 		world_list.add_item(env)
 
 func _switch_profile() -> void:
-	Signals.emit_signal("show_profile_select")
+	channel.emit_signal("show_profile_select")
 
 
 func _reload_profile() -> void:
-	Signals.emit_signal("reload_profile")
+	channel.emit_signal("reload_profile")
 	
 func _change_profile_name(text: String):
 	vm.update_active_profile_name(text)

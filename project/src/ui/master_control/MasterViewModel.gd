@@ -15,13 +15,13 @@ func _init():
 	add_child(model, true)
 
 func _ready():
-	Signals.connect("profile_loaded", self, "_on_profile_loaded")
-	Signals.connect("save_active_profile", model, "save_active_profile")
-	Signals.connect("update_active_profile_name" , model, "set_active_profile_name")
-	Signals.connect("update_selected_world", model, "set_selected_world")
-	Signals.connect("load_active_profile", model, "load_active_profile")
-	Signals.connect("show_profile_select", self, "emit_signal", ["leave_playground"])
-	Signals.connect("reload_profile", self, "emit_signal", ["reload_profile"])
+	channel.connect("profile_loaded", self, "_on_profile_loaded")
+	channel.connect("save_active_profile", model, "save_active_profile")
+	channel.connect("update_active_profile_name" , model, "set_active_profile_name")
+	channel.connect("update_selected_world", model, "set_selected_world")
+	channel.connect("load_active_profile", model, "load_active_profile")
+	channel.connect("show_profile_select", self, "emit_signal", ["leave_playground"])
+	channel.connect("reload_profile", self, "emit_signal", ["reload_profile"])
 
 func get_child_signalers():
 	return [model]

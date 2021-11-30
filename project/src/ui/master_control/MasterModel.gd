@@ -15,19 +15,19 @@ func _init():
 func _ready():
 	print("IN MASTERMODEL: READY")
 	profile_manager.connect("active_profile_changed", self, "assert_active_not_equals_orig")
-	Signals.connect("read_active_profile", self, "broadcast_active_profile")
-	Signals.connect("load_profile", profile_manager, "load_profile")
+	channel.connect("read_active_profile", self, "broadcast_active_profile")
+	channel.connect("load_profile", profile_manager, "load_profile")
 	
 func get_child_signalers():
 	return [profile_manager]
 	
 func broadcast_active_profile():
-	Signals.emit_signal("broadcast_active_profile", profile_manager.active_profile)
+	channel.emit_signal("broadcast_active_profile", profile_manager.active_profile)
 
 
 func assert_active_not_equals_orig(active_profile = null):
 	var is_equal = profile_manager.orig_profile.is_equal(profile_manager.active_profile)
-	Signals.emit_signal("active_profile_equals_orig_profile", is_equal)
+	channel.emit_signal("active_profile_equals_orig_profile", is_equal)
 	
 func set_selected_world(world_name: String) -> void:
 	print("IN MASTERMODEL: set_selected_world")

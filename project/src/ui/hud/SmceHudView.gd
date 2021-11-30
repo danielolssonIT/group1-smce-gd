@@ -21,10 +21,10 @@ func _on_update_hud(profile, slots) -> void:
 		hud.queue_free() # Remove from the scene tree so the old HUD instance doesn't show
 	
 	hud = hud_t.instance() # Make a new HUD since we removed the old one
-	hud.channel = channel
 	
 	hud.cam_ctl = get_node("/root/MasterView/World").cam_ctl
 	
 	add_child(hud)
+	hud.channel = channel
 	hud.profile   = profile
 	hud.add_slots(slots)

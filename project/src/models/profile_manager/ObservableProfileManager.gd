@@ -44,7 +44,7 @@ func _init():
 func load_profile(profile) -> void:
 	var success = _profile_manager.load_profile(profile)
 	_profile_manager.active_profile.connect("profile_changed", self, "_on_active_profile_changed")
-	if success: Signals.emit_signal("profile_loaded", profile)
+	if success: channel.emit_signal("profile_loaded", profile)
 	
 func load_profiles() -> Array:
 	var result = _profile_manager.load_profiles()
@@ -56,13 +56,13 @@ func load_active_profile() -> void:
 	var success = _profile_manager.load_active_profile()
 	if success: 
 		emit_signal("active_profile_loaded", _profile_manager.active_profile)
-		Signals.emit_signal("profile_loaded", _profile_manager.active_profile)
+		channel.emit_signal("profile_loaded", _profile_manager.active_profile)
 
 func load_orig_profile() -> void:
 	var success = _profile_manager.load_orig_profile()
 	if success: 
 		emit_signal("orig_profile_loaded", _profile_manager.orig_profile)
-		Signals.emit_signal("profile_loaded", _profile_manager.orig_profile)
+		channel.emit_signal("profile_loaded", _profile_manager.orig_profile)
 	
 func save_profile(profile) -> void:
 	var success = _profile_manager.save_profile(profile)
