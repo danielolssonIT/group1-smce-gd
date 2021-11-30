@@ -16,7 +16,7 @@
 #
 class_name ProfileSelectorView
 
-extends Control
+extends Signaler
 
 var profile_button_t = preload("res://src/ui/profile_selector/ProfileButton.tscn")
 
@@ -27,6 +27,7 @@ var vm = null # the view model for profile selection
 
 # Make sure "_on_profile_pressed" is called when button is pressed
 func _ready() -> void:
+	print("IN PROFILE_SELECTOR_VIEW _READY()")
 	vm = ProfileSelectorViewModel.new()
 	
 	add_child(vm, true)
@@ -35,6 +36,9 @@ func _ready() -> void:
 	vm.connect("hide_buttons", self, "_on_hide_buttons")
 	vm.connect("hide_profile_select", self, "_on_hide_profile_select")
 	
+func get_child_signalers():
+	return []	
+
 # displays saved profiles horizontally on the start page
 func display_profiles(arr: Array) -> void:
 	# removes all saved profile buttons 

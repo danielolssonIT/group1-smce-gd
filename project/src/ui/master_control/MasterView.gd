@@ -15,10 +15,11 @@
 #  limitations under the License.
 #
 
-extends Node
+extends Signaler
 
 onready var profile_select = $ProfileSelect
 onready var screen_cover = $ScreenCover
+onready var hud = $HUD
 
 var vm = null
 
@@ -32,6 +33,12 @@ func _ready() -> void:
 	vm.connect("show_playground", self, "_on_show_playground")
 	vm.connect("leave_playground", self, "_on_leave_playground")
 	vm.connect("reload_profile", self, "reload_profile")
+	
+	set_signals_handler(Signals2.new())
+	print("MASTER_VIEW _READY() DONE!")
+	
+func get_child_signalers():
+	return [profile_select]
 	
 # handles inputEvents
 func _input(event: InputEvent):

@@ -119,7 +119,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/models/profile_manager/ProfileManager2.gd"
 }, {
-"base": "Control",
+"base": "Signaler",
 "class": "ProfileSelectorView",
 "language": "GDScript",
 "path": "res://src/ui/profile_selector/ProfileSelectorView.gd"
@@ -163,6 +163,16 @@ _global_script_classes=[ {
 "class": "ShootyVisualizer",
 "language": "GDScript",
 "path": "res://src/attachments/ShootyVisualizer.gd"
+}, {
+"base": "Node",
+"class": "Signaler",
+"language": "GDScript",
+"path": "res://src/utilities/Signaler.gd"
+}, {
+"base": "Node",
+"class": "Signals2",
+"language": "GDScript",
+"path": "res://src/utilities/Signals2.gd"
 }, {
 "base": "Button",
 "class": "SimpleNotification",
@@ -251,6 +261,8 @@ _global_script_class_icons={
 "SettingPaneViewModel": "",
 "Shooty": "",
 "ShootyVisualizer": "",
+"Signaler": "",
+"Signals2": "",
 "SimpleNotification": "",
 "Sketch": "",
 "SketchManager": "",
