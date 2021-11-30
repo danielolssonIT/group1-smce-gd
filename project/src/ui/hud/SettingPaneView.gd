@@ -1,6 +1,6 @@
 class_name SettingPaneView
 
-extends Node
+extends SignalerNode
 
 signal toggled
 
@@ -44,6 +44,10 @@ func _ready():
 	#vm.reflect_profile()
 	Signals.emit_signal("read_active_profile")
 	_update_envs()
+
+func get_child_signalers():
+	return [vm]
+
 
 func _save_profile():
 	vm.save_profile()

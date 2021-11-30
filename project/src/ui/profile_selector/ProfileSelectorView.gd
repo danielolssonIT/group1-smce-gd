@@ -16,7 +16,7 @@
 #
 class_name ProfileSelectorView
 
-extends Signaler
+extends SignalerControl
 
 var profile_button_t = preload("res://src/ui/profile_selector/ProfileButton.tscn")
 
@@ -40,7 +40,7 @@ func _ready() -> void:
 	vm.connect("hide_profile_select", self, "_on_hide_profile_select")
 	
 func get_child_signalers():
-	return []	
+	return [vm]	
 
 # displays saved profiles horizontally on the start page
 func display_profiles(arr: Array) -> void:

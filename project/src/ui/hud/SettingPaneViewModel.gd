@@ -1,6 +1,6 @@
 class_name SettingPaneViewModel
 
-extends Node
+extends SignalerNode
 
 signal profile_name_changed
 signal update_boards_label

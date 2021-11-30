@@ -16,7 +16,7 @@
 #
 class_name ObservableProfileManager
 
-extends Signaler
+extends SignalerNode
 
 # The signals emitted upon a successful call to some of the functions
 signal profiles_loaded
@@ -35,7 +35,7 @@ var orig_profile = null setget set_orig_profile, get_orig_profile
 var saved_profiles = null setget set_saved_profiles, get_saved_profiles
 
 # The object we are wrapping (ProfileManager)
-var _profile_manager = ProfileManager2.new()
+var _profile_manager = ProfileManager.new()
 
 func _init():
 	name = "ObservableProfileManager"

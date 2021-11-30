@@ -15,7 +15,7 @@
 #  limitations under the License.
 #
 
-extends Signaler
+extends SignalerNode
 
 onready var profile_select = $ProfileSelect
 onready var screen_cover = $ScreenCover
@@ -38,7 +38,7 @@ func _ready() -> void:
 	print("MASTER_VIEW _READY() DONE!")
 	
 func get_child_signalers():
-	return [profile_select, vm]
+	return [profile_select, vm, hud]
 	
 # handles inputEvents
 func _input(event: InputEvent):

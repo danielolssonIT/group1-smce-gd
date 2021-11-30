@@ -1,4 +1,4 @@
-extends Node
+extends SignalerNode
 
 class_name SmceHudViewModel
 

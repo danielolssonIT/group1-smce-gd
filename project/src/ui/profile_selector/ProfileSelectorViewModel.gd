@@ -16,7 +16,7 @@
 #
 class_name ProfileSelectorViewModel
 
-extends Node
+extends SignalerNode
 
 signal hide_buttons
 signal hide_profile_select

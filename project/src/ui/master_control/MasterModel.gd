@@ -1,6 +1,6 @@
 class_name MasterModel
 
-extends Signaler
+extends SignalerNode
 
 var profile_manager = ObservableProfileManager.new()
 #var sketch_manager = SketchManager.new() 

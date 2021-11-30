@@ -1,4 +1,4 @@
-extends Signaler
+extends SignalerNode
 
 class_name MasterViewModel
 

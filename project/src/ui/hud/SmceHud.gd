@@ -16,7 +16,7 @@
 #
 
 class_name SmceHud
-extends Control
+extends SignalerControl
 
 var button_t = preload("res://src/ui/hud/SketchButton.tscn")
 var control_pane_t = preload("res://src/ui/sketch_control/ControlPane.tscn")
@@ -64,6 +64,9 @@ func _ready() -> void:
 	profile_screen_toggle.connect("button_down", self, "_toggle_setting_pane", [false])
 	
 	sketch_manager = SketchManager.new()
+
+func get_child_signalers():
+	return [setting_pane]
 
 func _toggle_setting_pane(show: bool) -> void:
 	var tween: Tween = TempTween.new()

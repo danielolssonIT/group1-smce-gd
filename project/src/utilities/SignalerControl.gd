@@ -1,12 +1,12 @@
-class_name Signaler
+class_name SignalerControl
 
-extends Node
+extends Control
 
 var channel = null setget set_channel
 
 # Should be defined in the class that extends this class
 func get_child_signalers():
-	pass
+	return []
 
 func set_channel(_channel):
 	var _class_name = name
