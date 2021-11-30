@@ -1,9 +1,9 @@
 class_name MasterModel
 
-extends SignalerNode
+extends Node
 
 var profile_manager = ObservableProfileManager.new()
-#var sketch_manager = SketchManager.new() 
+var channel = null setget set_channel
 
 onready var world = get_node("/root/Master/World")
 
@@ -16,12 +16,14 @@ func _ready():
 	print("IN MASTERMODEL: READY")
 	profile_manager.connect("active_profile_changed", self, "assert_active_not_equals_orig")
 	
-func get_child_signalers():
-	return [profile_manager]
+func set_channel(_channel):	
+	channel = _channel
 	
-func on_channel_set():
 	channel.connect("read_active_profile", self, "broadcast_active_profile")
 	channel.connect("load_profile", profile_manager, "load_profile")
+	
+	for child in [profile_manager]:
+		child.set_channel(_channel)
 	
 func broadcast_active_profile():
 	channel.emit_signal("broadcast_active_profile", profile_manager.active_profile)

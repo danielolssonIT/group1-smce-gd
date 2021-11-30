@@ -16,7 +16,7 @@
 #
 class_name ObservableProfileManager
 
-extends SignalerNode
+extends Node
 
 # The signals emitted upon a successful call to some of the functions
 signal profiles_loaded
@@ -36,9 +36,13 @@ var saved_profiles = null setget set_saved_profiles, get_saved_profiles
 
 # The object we are wrapping (ProfileManager)
 var _profile_manager = ProfileManager.new()
+var channel = null setget set_channel
 
 func _init():
 	name = "ObservableProfileManager"
+
+func set_channel(_channel):	
+	channel = _channel
 
 # The wrapping functions that emit signals upon success
 func load_profile(profile) -> void:

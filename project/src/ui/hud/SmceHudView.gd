@@ -1,8 +1,9 @@
-extends SignalerNode
+extends Node
 
 var hud_t = preload("res://src/ui/hud/SmceHud.tscn")
 var hud = null
 var vm = SmceHudViewModel.new()
+var channel = null setget set_channel
 
 func _init():
 	name = "SmceHudView"
@@ -12,8 +13,11 @@ func _ready():
 	print("IN SMCE_HUD_VIEW _ready()")
 	vm.connect("update_hud", self, "_on_update_hud")
 
-func get_child_signalers():
-	return [vm]
+func set_channel(_channel):	
+	channel = _channel
+	
+	for child in [vm]:
+		child.set_channel(_channel)
 		
 func _on_update_hud(profile, slots) -> void:
 	print("IN SMCE_HUD_VIEW : ON_UPDATE_HUD")

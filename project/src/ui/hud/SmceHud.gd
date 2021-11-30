@@ -16,7 +16,7 @@
 #
 
 class_name SmceHud
-extends SignalerControl
+extends Control
 
 var button_t = preload("res://src/ui/hud/SketchButton.tscn")
 var control_pane_t = preload("res://src/ui/sketch_control/ControlPane.tscn")
@@ -42,6 +42,7 @@ var paths: Dictionary = {}
 var cam_ctl: CamCtl = null
 var profile = null
 var sketch_manager: SketchManager = null
+var channel = null setget set_channel
 
 var disabled = false setget set_disabled
 
@@ -65,8 +66,11 @@ func _ready() -> void:
 	
 	sketch_manager = SketchManager.new()
 
-func get_child_signalers():
-	return [setting_pane]
+func set_channel(_channel):	
+	channel = _channel
+	
+	for child in [setting_pane]:
+		child.set_channel(_channel)
 
 func _toggle_setting_pane(show: bool) -> void:
 	var tween: Tween = TempTween.new()

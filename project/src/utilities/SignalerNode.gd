@@ -26,4 +26,3 @@ func set_channel(_channel):
 	for child in children:
 		child.set_channel(_channel)
 		
-

@@ -16,13 +16,18 @@
 #
 class_name ProfileSelectorViewModel
 
-extends SignalerNode
+extends Node
 
 signal hide_buttons
 signal hide_profile_select
 
+var channel = null setget set_channel
+
 func _init():
 	name = "ProfileSelectorViewModel"
+
+func set_channel(_channel):	
+	channel = _channel
 
 func load_profile(profile) -> void:
 	print("ProfileSelectorViewModel: on_profile_selected called!")

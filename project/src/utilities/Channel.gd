@@ -1,3 +1,5 @@
+class_name Channel
+
 extends Node
 
 # Request = a signal that tells some other script to do something

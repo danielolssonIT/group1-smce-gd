@@ -1,6 +1,6 @@
 class_name SettingPaneViewModel
 
-extends SignalerNode
+extends Node
 
 signal profile_name_changed
 signal update_boards_label
@@ -10,14 +10,18 @@ signal update_save_btn_disabled
 
 var unique_sketches: int = 0
 var boards: Array = []
+var channel = null setget set_channel
 
 func _init():
 	name = "SettingPaneViewModel"
 	
-func on_channel_set():
+func set_channel(_channel):	
+	channel = _channel
+	
 	channel.connect("profile_loaded", self, "reflect_profile")
 	channel.connect("active_profile_equals_orig_profile", self, "_signal_update_save_btn_disabled")
 	channel.connect("broadcast_active_profile", self, "reflect_profile")
+	
 	
 func reflect_profile(profile):
 	if ! is_instance_valid(profile):

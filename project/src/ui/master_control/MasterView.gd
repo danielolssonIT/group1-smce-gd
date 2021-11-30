@@ -15,13 +15,14 @@
 #  limitations under the License.
 #
 
-extends SignalerNode
+extends Node
 
 onready var profile_select = $ProfileSelect
 onready var screen_cover = $ScreenCover
 onready var hud = $HUD
 
 var vm = MasterViewModel.new()
+var channel = null setget set_channel
 
 func _init():
 	name = "MasterView"
@@ -35,11 +36,14 @@ func _ready() -> void:
 	vm.connect("leave_playground", self, "_on_leave_playground")
 	vm.connect("reload_profile", self, "reload_profile")
 	
-	set_channel(Signals2.new())
+	set_channel(Channel.new())
 	print("MASTER_VIEW _READY() DONE!")
 	
-func get_child_signalers():
-	return [vm, profile_select, hud]
+func set_channel(_channel):	
+	channel = _channel
+	
+	for child in [vm, profile_select, hud]:
+		child.set_channel(_channel)
 	
 # handles inputEvents
 func _input(event: InputEvent):

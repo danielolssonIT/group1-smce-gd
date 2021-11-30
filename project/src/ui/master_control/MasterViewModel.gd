@@ -1,4 +1,4 @@
-extends SignalerNode
+extends Node
 
 class_name MasterViewModel
 
@@ -8,6 +8,7 @@ signal leave_playground
 signal reload_profile
 
 var model = MasterModel.new()
+var channel = null setget set_channel
 
 func _init():
 	name = "MasterViewModel"
@@ -15,10 +16,9 @@ func _init():
 func _ready():
 	add_child(model, true)
 
-func get_child_signalers():
-	return [model]
-
-func on_channel_set():
+func set_channel(_channel):	
+	channel = _channel
+	
 	channel.connect("profile_loaded", self, "_on_profile_loaded")
 	channel.connect("save_active_profile", model, "save_active_profile")
 	channel.connect("update_active_profile_name" , model, "set_active_profile_name")
@@ -27,6 +27,9 @@ func on_channel_set():
 	channel.connect("show_profile_select", self, "emit_signal", ["leave_playground"])
 	channel.connect("reload_profile", self, "emit_signal", ["reload_profile"])
 	
+	for child in [model]:
+		child.set_channel(_channel)
+
 # will enter this at start and every time we press "Reload" 
 # since we technically first unload in order to be able to reload
 # also every time we press "Switch" since we have to unload in order to switch profile

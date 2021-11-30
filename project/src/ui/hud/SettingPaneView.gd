@@ -1,6 +1,6 @@
 class_name SettingPaneView
 
-extends SignalerNode
+extends Node
 
 signal toggled
 
@@ -19,6 +19,7 @@ onready var boards_label: Label = $VBoxContainer/MarginContainer/VBoxContainer/B
 onready var version_label: Label = $VBoxContainer/MarginContainer/Version
 
 var vm = SettingPaneViewModel.new() 
+var channel = null setget set_channel
 
 func _init():
 	name = "SettingPaneView"
@@ -44,11 +45,12 @@ func _ready():
 	
 	_update_envs()
 
-func get_child_signalers():
-	return [vm]
-
-func on_channel_set():
-	# Wait one frame to ensure that the ViewModel has connected to "broadcast_active_profile"
+func set_channel(_channel):	
+	channel = _channel
+	
+	for child in [vm]:
+		child.set_channel(_channel)
+		
 	yield(get_tree(), "idle_frame")
 	channel.emit_signal("read_active_profile")
 

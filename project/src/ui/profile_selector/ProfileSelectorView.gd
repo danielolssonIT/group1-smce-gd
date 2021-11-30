@@ -16,7 +16,7 @@
 #
 class_name ProfileSelectorView
 
-extends SignalerControl
+extends Control
 
 var profile_button_t = preload("res://src/ui/profile_selector/ProfileButton.tscn")
 
@@ -24,6 +24,7 @@ onready var attach = $VBoxContainer/CenterContainer/MarginContainer/HBoxContaine
 onready var fresh_btn = attach.get_node("Button") # "Start Fresh" button
 
 var vm = ProfileSelectorViewModel.new()
+var channel = null setget set_channel
 
 func _init():
 	name = "ProfileSelectorView"
@@ -37,8 +38,11 @@ func _ready() -> void:
 	vm.connect("hide_buttons", self, "_on_hide_buttons")
 	vm.connect("hide_profile_select", self, "_on_hide_profile_select")
 	
-func get_child_signalers():
-	return [vm]	
+func set_channel(_channel):	
+	channel = _channel
+	
+	for child in [vm]:
+		child.set_channel(_channel)
 
 # displays saved profiles horizontally on the start page
 func display_profiles(arr: Array) -> void:
