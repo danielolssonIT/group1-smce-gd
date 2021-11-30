@@ -23,7 +23,7 @@ var profile_button_t = preload("res://src/ui/profile_selector/ProfileButton.tscn
 onready var attach = $VBoxContainer/CenterContainer/MarginContainer/HBoxContainer
 onready var fresh_btn = attach.get_node("Button") # "Start Fresh" button
 
-var vm = null # the view model for profile selection
+var vm = ProfileSelectorViewModel.new()
 
 func _init():
 	name = "ProfileSelectorView"
@@ -31,8 +31,6 @@ func _init():
 # Make sure "_on_profile_pressed" is called when button is pressed
 func _ready() -> void:
 	print("IN PROFILE_SELECTOR_VIEW _READY()")
-	vm = ProfileSelectorViewModel.new()
-	
 	add_child(vm, true)
 	
 	fresh_btn.connect("pressed", self, "_on_profile_pressed", [vm.get_fresh_profile()])

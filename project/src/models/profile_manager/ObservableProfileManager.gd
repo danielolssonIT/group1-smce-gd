@@ -44,7 +44,8 @@ func _init():
 func load_profile(profile) -> void:
 	var success = _profile_manager.load_profile(profile)
 	_profile_manager.active_profile.connect("profile_changed", self, "_on_active_profile_changed")
-	if success: channel.emit_signal("profile_loaded", profile)
+	if success: 
+		channel.emit_signal("profile_loaded", profile)
 	
 func load_profiles() -> Array:
 	var result = _profile_manager.load_profiles()

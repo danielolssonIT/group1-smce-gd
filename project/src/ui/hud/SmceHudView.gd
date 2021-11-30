@@ -9,7 +9,7 @@ func _init():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print("IN SMCE_HUD_VIEW")
+	print("IN SMCE_HUD_VIEW _ready()")
 	vm.connect("update_hud", self, "_on_update_hud")
 
 func get_child_signalers():
@@ -22,9 +22,11 @@ func _on_update_hud(profile, slots) -> void:
 	
 	hud = hud_t.instance() # Make a new HUD since we removed the old one
 	
-	hud.cam_ctl = get_node("/root/MasterView/World").cam_ctl
+	hud.cam_ctl = get_node("/root/Master/World").cam_ctl
+	
 	
 	add_child(hud)
+	
 	hud.channel = channel
 	hud.profile   = profile
 	hud.add_slots(slots)

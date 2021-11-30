@@ -21,11 +21,12 @@ onready var profile_select = $ProfileSelect
 onready var screen_cover = $ScreenCover
 onready var hud = $HUD
 
-var vm = null
+var vm = MasterViewModel.new()
 
-func _ready() -> void:
+func _init():
 	name = "MasterView"
-	vm = MasterViewModel.new() #MasterViewModel variable created
+	
+func _ready() -> void:
 	add_child(vm, true)
 	
 	profile_select.play_show_buttons_animation(vm.get_profiles())
@@ -34,11 +35,11 @@ func _ready() -> void:
 	vm.connect("leave_playground", self, "_on_leave_playground")
 	vm.connect("reload_profile", self, "reload_profile")
 	
-	channel = Signals2.new()
+	set_channel(Signals2.new())
 	print("MASTER_VIEW _READY() DONE!")
 	
 func get_child_signalers():
-	return [profile_select, vm, hud]
+	return [vm, profile_select, hud]
 	
 # handles inputEvents
 func _input(event: InputEvent):

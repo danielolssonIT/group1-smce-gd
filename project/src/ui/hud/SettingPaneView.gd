@@ -18,13 +18,12 @@ onready var boards_label: Label = $VBoxContainer/MarginContainer/VBoxContainer/B
 
 onready var version_label: Label = $VBoxContainer/MarginContainer/Version
 
-var vm = null
+var vm = SettingPaneViewModel.new() 
 
 func _init():
 	name = "SettingPaneView"
 
 func _ready():
-	vm = SettingPaneViewModel.new() #MasterViewModel variable created
 	add_child(vm, true)
 	
 	toggle_btn.connect("pressed", self, "emit_signal", ["toggled"])
@@ -42,12 +41,16 @@ func _ready():
 	vm.connect("update_save_btn_disabled", self, "_on_update_save_btn_disabled")
 	
 	#vm.reflect_profile()
-	channel.emit_signal("read_active_profile")
+	
 	_update_envs()
 
 func get_child_signalers():
 	return [vm]
 
+func on_channel_set():
+	# Wait one frame to ensure that the ViewModel has connected to "broadcast_active_profile"
+	yield(get_tree(), "idle_frame")
+	channel.emit_signal("read_active_profile")
 
 func _save_profile():
 	vm.save_profile()

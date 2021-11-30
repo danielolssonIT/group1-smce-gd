@@ -69,12 +69,12 @@ _global_script_classes=[ {
 "language": "NativeScript",
 "path": "res://src/bind/GpioDriverConfig.gdns"
 }, {
-"base": "Node",
+"base": "SignalerNode",
 "class": "MasterModel",
 "language": "GDScript",
 "path": "res://src/ui/master_control/MasterModel.gd"
 }, {
-"base": "Node",
+"base": "SignalerNode",
 "class": "MasterViewModel",
 "language": "GDScript",
 "path": "res://src/ui/master_control/MasterViewModel.gd"
@@ -94,7 +94,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/models/ObservableProfileConfig.gd"
 }, {
-"base": "Signaler",
+"base": "SignalerNode",
 "class": "ObservableProfileManager",
 "language": "GDScript",
 "path": "res://src/models/profile_manager/ObservableProfileManager.gd"
@@ -114,7 +114,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/ui/profile_selector/ProfileSelectorView.gd"
 }, {
-"base": "Signaler",
+"base": "SignalerNode",
 "class": "ProfileSelectorViewModel",
 "language": "GDScript",
 "path": "res://src/ui/profile_selector/ProfileSelectorViewModel.gd"
@@ -139,12 +139,12 @@ _global_script_classes=[ {
 "language": "NativeScript",
 "path": "res://src/bind/SecureDigitalStorage.gdns"
 }, {
-"base": "Signaler",
+"base": "SignalerNode",
 "class": "SettingPaneView",
 "language": "GDScript",
 "path": "res://src/ui/hud/SettingPaneView.gd"
 }, {
-"base": "Signaler",
+"base": "SignalerNode",
 "class": "SettingPaneViewModel",
 "language": "GDScript",
 "path": "res://src/ui/hud/SettingPaneViewModel.gd"
@@ -194,7 +194,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/ui/hud/SmceHud.gd"
 }, {
-"base": "Signaler",
+"base": "SignalerNode",
 "class": "SmceHudViewModel",
 "language": "GDScript",
 "path": "res://src/ui/hud/SmceHudViewModel.gd"
@@ -295,7 +295,6 @@ DebugCanvas="*res://src/utilities/debug_canvas/DebugCanvas.gd"
 FocusOwner="*res://src/utilities/focus_owner/FocusOwner.gd"
 Global="*res://Global.gd"
 ModManager="*res://src/ui/master_control/ModManager.gd"
-Signals="*res://src/utilities/Signals.gd"
 
 [debug]
 

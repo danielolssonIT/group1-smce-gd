@@ -13,10 +13,8 @@ var boards: Array = []
 
 func _init():
 	name = "SettingPaneViewModel"
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	print("IN SETTING_PANE_VIEW_MODEL: READY")
+	
+func on_channel_set():
 	channel.connect("profile_loaded", self, "reflect_profile")
 	channel.connect("active_profile_equals_orig_profile", self, "_signal_update_save_btn_disabled")
 	channel.connect("broadcast_active_profile", self, "reflect_profile")
