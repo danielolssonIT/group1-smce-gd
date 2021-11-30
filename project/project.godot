@@ -74,12 +74,12 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/models/profile_manager/IProfileManager.gd"
 }, {
-"base": "Signaler",
+"base": "Node",
 "class": "MasterModel",
 "language": "GDScript",
 "path": "res://src/ui/master_control/MasterModel.gd"
 }, {
-"base": "Signaler",
+"base": "Node",
 "class": "MasterViewModel",
 "language": "GDScript",
 "path": "res://src/ui/master_control/MasterViewModel.gd"
@@ -99,7 +99,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/models/ObservableProfileConfig.gd"
 }, {
-"base": "Signaler",
+"base": "IProfileManager",
 "class": "ObservableProfileManager",
 "language": "GDScript",
 "path": "res://src/models/profile_manager/ObservableProfileManager.gd"
@@ -148,11 +148,6 @@ _global_script_classes=[ {
 "class": "SecureDigitalStorage",
 "language": "NativeScript",
 "path": "res://src/bind/SecureDigitalStorage.gdns"
-}, {
-"base": "Node",
-"class": "SettingPaneView",
-"language": "GDScript",
-"path": "res://src/ui/hud/SettingPaneView.gd"
 }, {
 "base": "Node",
 "class": "SettingPaneViewModel",
@@ -263,7 +258,6 @@ _global_script_class_icons={
 "RayWheel": "",
 "SMCE": "",
 "SecureDigitalStorage": "",
-"SettingPaneView": "",
 "SettingPaneViewModel": "",
 "Shooty": "",
 "ShootyVisualizer": "",

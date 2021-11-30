@@ -34,7 +34,7 @@ func _ready() -> void:
 	vm.connect("leave_playground", self, "_on_leave_playground")
 	vm.connect("reload_profile", self, "reload_profile")
 	
-	set_signals_handler(Signals2.new())
+	channel = Signals2.new()
 	print("MASTER_VIEW _READY() DONE!")
 	
 func get_child_signalers():
