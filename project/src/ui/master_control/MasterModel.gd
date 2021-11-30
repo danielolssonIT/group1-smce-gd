@@ -1,13 +1,14 @@
 class_name MasterModel
 
-extends Node
+extends Signaler
 
 var profile_manager = ObservableProfileManager.new()
 #var sketch_manager = SketchManager.new() 
 
-onready var world = get_node("/root/Master/World")
+onready var world = get_node("/root/MasterView/World")
 
 func _init():
+	name = "MasterModel"
 	profile_manager.load_profiles()
 
 # Called when the node enters the scene tree for the first time.
@@ -16,6 +17,9 @@ func _ready():
 	profile_manager.connect("active_profile_changed", self, "assert_active_not_equals_orig")
 	Signals.connect("read_active_profile", self, "broadcast_active_profile")
 	Signals.connect("load_profile", profile_manager, "load_profile")
+	
+func get_child_signalers():
+	return [profile_manager]
 	
 func broadcast_active_profile():
 	Signals.emit_signal("broadcast_active_profile", profile_manager.active_profile)

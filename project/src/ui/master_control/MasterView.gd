@@ -1,5 +1,5 @@
 #
-#  Master.gd
+#  MasterView.gd
 #  Copyright 2021 ItJustWorksTM
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,8 +24,8 @@ onready var hud = $HUD
 var vm = null
 
 func _ready() -> void:
+	name = "MasterView"
 	vm = MasterViewModel.new() #MasterViewModel variable created
-	vm.name = "MasterViewModel"
 	add_child(vm, true)
 	
 	profile_select.play_show_buttons_animation(vm.get_profiles())
@@ -38,7 +38,7 @@ func _ready() -> void:
 	print("MASTER_VIEW _READY() DONE!")
 	
 func get_child_signalers():
-	return [profile_select]
+	return [profile_select, vm]
 	
 # handles inputEvents
 func _input(event: InputEvent):

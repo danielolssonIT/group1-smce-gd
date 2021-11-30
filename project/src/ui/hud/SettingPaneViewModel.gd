@@ -11,6 +11,9 @@ signal update_save_btn_disabled
 var unique_sketches: int = 0
 var boards: Array = []
 
+func _init():
+	name = "SettingPaneViewModel"
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print("IN SETTING_PANE_VIEW_MODEL: READY")

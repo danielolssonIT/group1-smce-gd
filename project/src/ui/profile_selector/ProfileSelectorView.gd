@@ -25,6 +25,9 @@ onready var fresh_btn = attach.get_node("Button") # "Start Fresh" button
 
 var vm = null # the view model for profile selection
 
+func _init():
+	name = "ProfileSelectorView"
+
 # Make sure "_on_profile_pressed" is called when button is pressed
 func _ready() -> void:
 	print("IN PROFILE_SELECTOR_VIEW _READY()")

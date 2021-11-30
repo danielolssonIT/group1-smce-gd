@@ -52,6 +52,8 @@ func set_disabled(val: bool = disabled) -> void:
 	if is_instance_valid(new_sketch_btn):
 		new_sketch_btn.disabled = val
 
+func _init():
+	name = "SmceHud"
 
 func _ready() -> void:
 	set_disabled()

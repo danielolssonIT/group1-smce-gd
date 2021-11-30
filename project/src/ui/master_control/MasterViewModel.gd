@@ -1,4 +1,4 @@
-extends Node
+extends Signaler
 
 class_name MasterViewModel
 
@@ -10,8 +10,9 @@ signal reload_profile
 var model = null
 
 func _init():
+	name = "MasterViewModel"
 	model = MasterModel.new()
-	add_child(model)
+	add_child(model, true)
 
 func _ready():
 	Signals.connect("profile_loaded", self, "_on_profile_loaded")
@@ -21,6 +22,9 @@ func _ready():
 	Signals.connect("load_active_profile", model, "load_active_profile")
 	Signals.connect("show_profile_select", self, "emit_signal", ["leave_playground"])
 	Signals.connect("reload_profile", self, "emit_signal", ["reload_profile"])
+
+func get_child_signalers():
+	return [model]
 	
 # will enter this at start and every time we press "Reload" 
 # since we technically first unload in order to be able to reload

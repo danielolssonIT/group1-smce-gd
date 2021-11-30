@@ -21,6 +21,9 @@ extends Node
 signal hide_buttons
 signal hide_profile_select
 
+func _init():
+	name = "ProfileSelectorViewModel"
+
 func load_profile(profile) -> void:
 	print("ProfileSelectorViewModel: on_profile_selected called!")
 	

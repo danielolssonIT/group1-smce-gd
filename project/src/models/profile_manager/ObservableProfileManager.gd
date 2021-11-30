@@ -16,7 +16,7 @@
 #
 class_name ObservableProfileManager
 
-extends IProfileManager
+extends Signaler
 
 # The signals emitted upon a successful call to some of the functions
 signal profiles_loaded
@@ -26,6 +26,8 @@ signal profiles_saved
 signal active_profile_changed
 signal orig_profile_changed
 
+
+
 # Fake variables that mimic those in the actual ProfileManager
 # (included here so we don't break any current references to them)
 var active_profile = null setget set_active_profile, get_active_profile
@@ -34,6 +36,9 @@ var saved_profiles = null setget set_saved_profiles, get_saved_profiles
 
 # The object we are wrapping (ProfileManager)
 var _profile_manager = ProfileManager2.new()
+
+func _init():
+	name = "ObservableProfileManager"
 
 # The wrapping functions that emit signals upon success
 func load_profile(profile) -> void:

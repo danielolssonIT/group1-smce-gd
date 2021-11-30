@@ -1,3 +1,5 @@
+class_name SettingPaneView
+
 extends Node
 
 signal toggled
@@ -17,6 +19,9 @@ onready var boards_label: Label = $VBoxContainer/MarginContainer/VBoxContainer/B
 onready var version_label: Label = $VBoxContainer/MarginContainer/Version
 
 var vm = null
+
+func _init():
+	name = "SettingPaneView"
 
 func _ready():
 	vm = SettingPaneViewModel.new() #MasterViewModel variable created

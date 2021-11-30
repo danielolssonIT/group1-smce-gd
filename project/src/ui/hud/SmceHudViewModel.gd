@@ -6,6 +6,7 @@ signal update_hud
 
 # Called when the node enters the scene tree for the first time.
 func _init():
+	name = "SmceHudViewModel"
 	Signals.connect("profile_loaded", self, "_on_profile_loaded")
 
 func _on_profile_loaded(profile) -> void:
